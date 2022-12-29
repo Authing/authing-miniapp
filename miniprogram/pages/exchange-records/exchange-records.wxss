@@ -1,0 +1,49 @@
+page {
+  padding-top: 52rpx;
+  box-sizing: border-box;
+}
+
+.exchange-records-container {
+  margin: 0 auto;
+  width: 654rpx;
+  border-radius: 16rpx;
+  background: #fff;
+}
+
+.exchange-records-container .cross-line {
+  padding: 30rpx 0;
+  box-sizing: border-box;
+}
+
+.exchange-records-container .block-item {
+  padding: 32rpx 0;
+  box-sizing: border-box;
+}
+
+.exchange-records-container .remained-integral {
+  margin-bottom: 16rpx;
+  text-align: center;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1D2129;
+}
+
+.exchange-records-container .qrcode {
+  display: block;
+  margin: 0 auto 20rpx auto;
+  width: 192rpx;
+  height: 192rpx;
+}
+
+.exchange-records-container .tips {
+  text-align: center;
+  font-size: 24rpx;
+  color: #86909C;
+}
+
+.copyright {
+  line-height: 100rpx;
+  text-align: center;
+  font-size: 24rpx;
+  color: #86909C;
+}

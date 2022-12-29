@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "integral-card-base-info": "../integral-card-base-info/integral-card-base-info"
+  }
+}

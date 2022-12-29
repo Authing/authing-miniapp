@@ -1,0 +1,27 @@
+<view class="integral-index-container">
+  <exchange-modal isShow="{{ isShowExchangeModal }}" bindclose="closeExchangeModal"></exchange-modal>
+
+  <profile userInfo="{{ userInfo }}" class="profile-container"></profile>
+
+  <view class="integral-card-list center-horizontally-container">
+    <integral-card-list-brief></integral-card-list-brief>
+    <integral-cross-line></integral-cross-line>
+
+    <view class="integral-card-item">
+      <integral-card-no-exchange bindtoExchange="toExchange"></integral-card-no-exchange>  
+      <integral-cross-line></integral-cross-line>
+    </view>
+
+    <view class="integral-card-item">
+      <integral-card-no-exchange bindtoExchange="toExchange"></integral-card-no-exchange>  
+      <integral-cross-line></integral-cross-line>
+    </view>
+
+    <view class="integral-card-item">
+      <integral-card-no-exchange bindtoExchange="toExchange"></integral-card-no-exchange>  
+      <integral-cross-line></integral-cross-line>
+    </view>
+  </view>
+
+  <tabbar></tabbar>
+</view>

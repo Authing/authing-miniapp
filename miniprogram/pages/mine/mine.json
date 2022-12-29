@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "我",
+  "usingComponents": {
+    "profile": "../../components/profile/profile",
+    "tabbar": "../../components/tabbar/tabbar"
+  }
+}

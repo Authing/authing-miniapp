@@ -1,0 +1,51 @@
+.integral-card-no-exchange-container {
+  margin: 24rpx auto 24rpx auto;
+  width: 590rpx;
+  background-color: #fff;
+}
+
+.integral-card-no-exchange-container .detail-info-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.integral-card-no-exchange-container .detail-info-box .exchange-condition {
+  width: 100%;
+}
+
+.integral-card-no-exchange-container .detail-info-box .exchange-condition .title {
+  height: 52rpx;
+  line-height: 52rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: 1D2129;
+}
+
+.integral-card-no-exchange-container .detail-info-box .exchange-condition .remain-count {
+  height: 40rpx;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: 24rpx;
+  color: #86909C;
+}
+
+.integral-card-no-exchange-container .detail-info-box .exchange-condition .remain-count .cross-line {
+  margin: 0 10rpx;
+}
+
+.integral-card-no-exchange-container .detail-info-box .exchange-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 120rpx;
+  height: 64rpx;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.integral-card-no-exchange-container .detail-info-box .exchange-button.no-exchange {
+  background-color: #215AE5;
+  color: #fff;
+}

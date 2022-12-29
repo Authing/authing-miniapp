@@ -1,0 +1,18 @@
+<view class="tabbar-container">
+  <view 
+    wx:for="{{ tabbarList }}" 
+    wx:for-item="item"
+    wx:key="name" 
+    class="tabbar-item"
+    bindtap="onClickTab"
+    data-name="{{ item.name }}">
+    <image 
+      wx:if="{{ item.name === _active }}" 
+      src="{{ item.selectedIconPath }}" 
+      class="tabbar-icon" />
+    <image 
+      wx:else 
+      src="{{ item.iconPath }}" 
+      class="tabbar-icon" />
+  </view>
+</view>

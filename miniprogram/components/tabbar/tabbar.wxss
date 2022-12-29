@@ -1,0 +1,21 @@
+.tabbar-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 96rpx;
+  background-color: #fff;
+}
+
+.tabbar-container .tabbar-item {
+  width: 52rpx;
+  height: 52rpx;
+}
+
+.tabbar-container .tabbar-item .tabbar-icon {
+  width: 100%;
+  height: 100%;
+}

@@ -1,0 +1,56 @@
+.exchange-modal-container {
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.exchange-modal-container .mask {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #000;
+  opacity: 0.5;
+}
+
+.exchange-modal-container .box {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  left: 50%;
+  margin-top: -282rpx;
+  margin-left: -320rpx;
+  width: 640rpx;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 16rpx;
+  padding: 32rpx 32rpx;
+  box-sizing: border-box;
+}
+
+.exchange-modal-container .box .title {
+  margin-bottom: 32rpx;
+  font-size: 34rpx;
+  font-weight: 600;
+}
+
+.exchange-modal-container .box .tips {
+  margin: 32rpx 0 64rpx 0;
+  font-size: 34rpx;
+  color: rgba(0, 0, 0, 0.5);
+}
+
+.exchange-modal-container .box .autheticate-button {
+  margin: 0 auto 24rpx auto;
+  width: 196rpx;
+  height: 80rpx;
+  background-color: #215AE5;
+  font-weight: 600;
+  font-size: 32rpx;
+  color: #fff;
+}

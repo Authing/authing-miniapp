@@ -1,0 +1,9 @@
+<view class="exchange-modal-container" wx:if="{{ _isShow }}">
+  <view class="mask"></view>
+  <view class="box">
+    <view class="title">兑换成功</view>
+    <integral-card-base-info></integral-card-base-info>
+    <view class="tips">为方便下发体验相关信息，需要获取你的联系方式</view>
+    <button class="autheticate-button" open-type="getPhoneNumber" bindgetphonenumber="authenticatePhone">去授权</button>
+  </view>
+</view>

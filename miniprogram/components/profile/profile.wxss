@@ -1,0 +1,41 @@
+.profile-container {
+  width: 654rpx;
+  height: 160rpx;
+  padding: 32rpx 32rpx;
+  box-sizing: border-box;
+  background-color: #fff;
+}
+
+.profile-box {
+  display: flex;
+  align-items: center;
+}
+
+.profile-container .image {
+  margin-right: 24rpx;
+  width: 96rpx;
+  height: 96rpx;
+}
+
+.profile-container .overview {
+
+}
+
+.profile-container .overview.no-login {
+  
+}
+
+.profile-container .overview.has-login {
+
+}
+
+.profile-container .overview .username {
+  margin-bottom: 4rpx;
+  font-size: 32rpx;
+  color: #1D2129;
+}
+
+.profile-container .overview .tips {
+  font-size: 24rpx;
+  color: #86909C;
+}

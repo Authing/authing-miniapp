@@ -1,0 +1,16 @@
+.integral-index-container {
+  padding-top: 26rpx;
+  box-sizing: border-box;
+}
+
+.integral-index-container .profile-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.integral-index-container .integral-card-list {
+  margin: 0 auto;
+  width: 654rpx;
+  background-color: #fff;
+}

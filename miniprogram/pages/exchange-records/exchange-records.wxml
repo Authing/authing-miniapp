@@ -1,0 +1,21 @@
+<view class="exchange-records-container">
+  <view class="block-item">
+    <view class="remained-integral">剩余积分：209</view>
+    <image src="https://img0.baidu.com/it/u=2028084904,3939052004&fm=253&fmt=auto&app=138&f=JPEG?w=889&h=500" class="qrcode"></image>
+    <view class="tips">如需体验，请微信扫码联系 Authing 专属客服</view>
+  </view>
+  <integral-cross-line></integral-cross-line>
+
+  <integral-exchanged-card></integral-exchanged-card>
+  <view class="cross-line">
+    <integral-cross-line></integral-cross-line>
+  </view>
+
+  <integral-exchanged-card></integral-exchanged-card>
+  <view class="cross-line">
+    <integral-cross-line></integral-cross-line>
+  </view>
+
+</view>
+
+<view class="copyright">活动解释权归北京蒸汽记忆有限公司所有</view>

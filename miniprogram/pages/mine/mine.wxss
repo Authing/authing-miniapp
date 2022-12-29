@@ -1,0 +1,27 @@
+.mine-container {
+  padding-top: 26rpx;
+  box-sizing: border-box;
+}
+
+.mine-container .profile-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 32rpx;
+}
+
+.mine-container .no-login-box {
+  margin: 0 auto;
+  padding: 32rpx 0;
+  box-sizing: border-box;
+  width: 654rpx;
+  height: 288rpx;
+  text-align: center;
+  background-color: #fff;
+  font-size: 28rpx;
+  color: #86909C;
+}
+
+.mine-container .no-login-box .no-login-icon {
+  width: 180rpx;
+  height: 180rpx;
+}

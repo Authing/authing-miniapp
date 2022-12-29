@@ -1,0 +1,15 @@
+<view class="integral-card-no-exchange-container">
+  <integral-card-base-info></integral-card-base-info>
+
+  <view class="detail-info-box">
+    <view class="exchange-condition">
+      <view class="title">B2B 用户池体验券 7 天</view>
+      <view class="remain-count">
+        <view>所需积分：50</view>
+        <view class="cross-line">|</view>
+        <view>剩余 10 张</view>
+      </view>
+    </view>
+    <view class="exchange-button no-exchange" bindtap="toExchange">兑换</view>
+  </view>
+</view>

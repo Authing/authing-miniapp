@@ -1,0 +1,59 @@
+.integral-cardbase-info-container {
+  position: relative;
+  margin-bottom: 16rpx;
+  width: 100%;
+  height: 248rpx;
+}
+
+.integral-cardbase-info-container .background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.integral-cardbase-info-container .logo {
+  position: absolute;
+  top: 20rpx;
+  left: 20rpx;
+  width: 124rpx;
+  height: 32rpx;
+}
+
+.integral-cardbase-info-container .label {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 56rpx;
+  height: 28rpx;
+  line-height: 28rpx;
+  text-align: center;
+  background-color: #fff;
+  font-size: 20rpx;
+  color: #4E5969;
+}
+
+.integral-cardbase-info-container .title {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #1D2129;
+}
+
+.integral-cardbase-info-container .title .chinese {
+  font-size: 48rpx;
+  font-weight: 600;
+}
+
+.integral-cardbase-info-container .title .english {
+  font-size: 24rpx;
+  letter-spacing: 28rpx;
+  text-indent: 30rpx;
+}

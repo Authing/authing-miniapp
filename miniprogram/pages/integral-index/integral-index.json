@@ -1,0 +1,12 @@
+{
+  "navigationBarTitleText": "",
+  "navigationBarBackgroundColor": "#F2F3F5",
+  "usingComponents": {
+    "profile": "../../components/profile/profile",
+    "tabbar": "../../components/tabbar/tabbar",
+    "integral-card-no-exchange": "../../components/integral-card-no-exchange/integral-card-no-exchange",
+    "integral-card-list-brief": "../../components/integral-card-list-brief/integral-card-list-brief",
+    "integral-cross-line": "../../components/integral-cross-line/integral-cross-line",
+    "exchange-modal": "../../components/exchange-modal/exchange-modal"
+  }
+}

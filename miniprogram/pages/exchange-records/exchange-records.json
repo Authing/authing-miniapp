@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "兑换记录",
+  "usingComponents": {
+    "integral-cross-line": "../../components/integral-cross-line/integral-cross-line",
+    "integral-exchanged-card": "../../components/integral-exchanged-card/integral-exchanged-card"
+  }
+}

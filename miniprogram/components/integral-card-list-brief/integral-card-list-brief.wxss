@@ -1,0 +1,41 @@
+.integral-card-list-brief-container {
+  padding: 32rpx 32rpx;
+  background-color: #fff;
+}
+
+.integral-card-list-brief-container  {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.integral-card-list-brief-container .left-overview {
+  line-height: 52rpx;
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #1D2129;
+}
+
+.integral-card-list-brief-container .left-overview .user-ingegral {
+  line-height: 40rpx;
+  font-size: 24rpx;
+  color: #86909C;
+}
+
+.integral-card-list-brief-container .right-tips {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #215AE5;
+}
+
+.integral-card-list-brief-container .right-tips .rules {
+  margin-right: 32rpx;
+}
+
+.integral-card-list-brief-container .integral-card-line {
+  display: block;
+  width: 100%;
+  height: 30rpx;
+}

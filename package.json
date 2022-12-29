@@ -1,0 +1,22 @@
+{
+  "name": "authing-miniapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Authing/authing-miniapp.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Authing/authing-miniapp/issues"
+  },
+  "homepage": "https://github.com/Authing/authing-miniapp#readme",
+  "dependencies": {
+    "@authing/miniapp-wx": "^5.1.2"
+  }
+}
