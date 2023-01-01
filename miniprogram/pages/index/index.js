@@ -1,4 +1,3 @@
-// index.js
 const app = getApp()
 
 let timer = null

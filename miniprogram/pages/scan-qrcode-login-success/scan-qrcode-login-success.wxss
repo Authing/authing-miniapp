@@ -1,0 +1,31 @@
+page {
+  background-color: #fff;
+}
+
+.scan-qrcode-login-success-container {
+  padding-top: 160rpx;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 28rpx;
+  color: #86909C;
+}
+
+.scan-qrcode-login-success-container .login-success-icon {
+  margin-bottom: 32rpx;
+  width: 314rpx;
+  height: 240rpx;
+}
+
+.scan-qrcode-login-success-container .button {
+  position: absolute;
+  bottom: 120rpx;
+  left: 50%;
+  margin-left: -327rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 654rpx;
+  height: 96rpx;
+  background-color: #215AE5;
+  color: #fff;
+}

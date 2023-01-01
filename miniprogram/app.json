@@ -3,7 +3,9 @@
     "pages/index/index",
     "pages/integral-index/integral-index",
     "pages/exchange-records/exchange-records",
-    "pages/mine/mine"
+    "pages/start/start",
+    "pages/authenticate-phone/authenticate-phone",
+    "pages/scan-qrcode-login-success/scan-qrcode-login-success"
   ],
   "window": {
     "backgroundTextStyle": "light",

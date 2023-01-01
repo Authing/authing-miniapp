@@ -1,6 +1,6 @@
 const routerMap = {
   integral: '/pages/integral-index/integral-index',
-  mine: '/pages/mine/mine'
+  mine: '/pages/start/start'
 }
 
 Component({

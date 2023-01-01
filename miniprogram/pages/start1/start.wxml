@@ -1,0 +1,1 @@
+<view bindtap="login">login</view>

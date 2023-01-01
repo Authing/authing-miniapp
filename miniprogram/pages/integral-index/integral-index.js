@@ -6,27 +6,9 @@ Page({
     isShowExchangeModal: false
   },
 
-  onLoad(options) {
+  onLoad() {
     this.getUserInfo()
     wx.hideHomeButton()
-  },
-
-  onReady() {
-
-  },
-
-  showRules () {
-
-  },
-
-  showExchangeRecord () {
-    
-  },
-
-  toExchange () {
-    this.setData({
-      isShowExchangeModal: true
-    })
   },
 
   closeExchangeModal () {

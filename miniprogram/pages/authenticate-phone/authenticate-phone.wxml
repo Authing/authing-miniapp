@@ -1,0 +1,25 @@
+<view class="authenticate-phone-container">
+  <image src="./images/authentication-icon.svg" class="authentication-icon"></image>
+  <view class="title">Authing 令牌</view>
+  <view class="user">
+    <image src="{{ userInfo.photo }}" class="photo"></image>
+    <view class="name">{{ userInfo.name || userInfo.username || userInfo.nickname}}</view>
+  </view>
+  <view class="tips">
+    <view class="title">请确认是本人操作</view>
+    <view class="item">
+      <view class="icon">.</view>
+      <view>使用账号登录你的该应用</view>
+    </view>
+    <view class="item">
+      <view class="icon">.</view>
+      <view>使用你的微信基本信息</view>
+    </view>
+    <view class="item">
+      <view class="icon">.</view>
+      <view>使用你的手机账号</view>
+    </view>
+  </view>
+  <button class="button login-button" open-type="getPhoneNumber" bindgetphonenumber="getPhone">登录</button>
+  <button class="button cancel-login-button" bindtap="cancelLogin">取消登录</button>
+</view>

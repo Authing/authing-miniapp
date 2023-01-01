@@ -4,28 +4,20 @@ const app = getApp()
 
 Component({
   properties: {
-    userInfo: {
-      type: Object,
-      value: null
+    isShow: {
+      type: Boolean,
+      value: false
     }
   },
 
   data: {
-    _userInfo: null
-  },
-
-  lifetimes: {
-    attached () {
-      this.setData({
-        _userInfo: this.data.userInfo
-      })
-    }
+    _isShow: false
   },
 
   observers: {
-    userInfo (userInfo) {
+    isShow (value) {
       this.setData({
-        _userInfo: userInfo
+        _isShow: value
       })
     }
   },
@@ -48,20 +40,20 @@ Component({
       })
 
       if (error) {
-        console.log('loginByCode error: ', error)
-        return wx.showModal({
-          content: JSON.stringify(error)
-        })
         return app.showLoginErrorToast()
       }
 
-      await this.getUserInfo()
-
-      wx.hideLoading()
+      this.getUserInfo()
     },
 
     async getUserInfo () {
+      wx.showLoading({
+        title: '加载中'
+      })
+
       const [error, userInfo] = await app.authing.getUserInfo()
+
+      wx.hideLoading()
 
       if (error) {
         return wx.showToast({

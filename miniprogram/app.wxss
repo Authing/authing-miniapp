@@ -1,4 +1,6 @@
 page {
+  padding-bottom: 150rpx;
+  box-sizing: border-box;
   background-color: #F2F3F5;
   font-family: "PingFang SC";
 }

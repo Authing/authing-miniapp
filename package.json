@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/Authing/authing-miniapp#readme",
   "dependencies": {
-    "@authing/miniapp-wx": "^5.1.2"
+    "@authing/miniapp-wx": "^5.1.3-alpha.3"
   }
 }

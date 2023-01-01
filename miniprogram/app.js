@@ -1,19 +1,35 @@
-const { Authing } = require('@authing/miniapp-wx')
+import { Authing } from '@authing/miniapp-wx'
 
-const authing = new Authing({
-  appId: '630ed3137dd6f2fd7001da24',
-  host: 'https://test-auth-zhaoyiming.authing.cn',
-  userPoolId: '62e221f85f5ac5cc47037a39'
-})
+const allMiniappConfig = {
+  test: {
+    appId: '63ae849aff68b0282d2c4968',
+    host: 'https://core.mysql.authing-inc.co',
+    userPoolId: '63ae80eca21547efd0369aec',
+    extIdpConnidentifier: 'wx-miniapp-scan-login'
+  },
+  prod: {
+
+  }
+}
+
+const environment = 'test'
+
+const miniappConfig = allMiniappConfig[environment]
+
+const authing = new Authing(miniappConfig)
 
 App({
   globalData: {
-    
+    miniappConfig,
+    environment,
+    scanCodeLoginConfig: {}
   },
 
   authing,
 
-  onLaunch() {
-    
+  showLoginErrorToast () {
+    wx.showToast({
+      title: '操作失败，请重试',
+    })
   }
 })

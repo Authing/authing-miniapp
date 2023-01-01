@@ -13,7 +13,7 @@ Component({
   lifetimes: {
     attached () {
       this.setData({
-        _isShow: this.isShow
+        _isShow: this.data.isShow
       })
     }
   },
