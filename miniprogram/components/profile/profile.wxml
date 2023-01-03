@@ -1,6 +1,6 @@
 <view class="profile-container">
   <view wx:if="{{ !_userInfo }}" class="profile-box" bindtap="toLogin">
-    <image src="./images/user-profile-nologin.svg" class="image"></image>
+    <image src="https://files.authing.co/authing-miniapp/user-profile-nologin.svg" class="image"></image>
     <view class="overview no-login">
       <view class="username">登录/注册</view>
       <view class="tips">体验 Authing 身份云</view>

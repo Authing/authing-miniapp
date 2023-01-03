@@ -49,3 +49,8 @@
   background-color: #215AE5;
   color: #fff;
 }
+
+.integral-card-no-exchange-container .detail-info-box .exchange-button.no-integral {
+  background-color: #F2F3F5;
+  color: #1D2129;
+}

@@ -1,5 +1,5 @@
 <view class="authenticate-phone-container">
-  <image src="./images/authentication-icon.svg" class="authentication-icon"></image>
+  <image src="https://files.authing.co/authing-miniapp/authentication-icon.svg" class="authentication-icon"></image>
   <view class="title">Authing 令牌</view>
   <view class="user">
     <image src="{{ userInfo.photo }}" class="photo"></image>

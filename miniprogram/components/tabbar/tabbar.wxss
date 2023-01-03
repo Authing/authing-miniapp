@@ -11,7 +11,7 @@
 }
 
 .tabbar-container .tabbar-item {
-  width: 52rpx;
+  flex: 1;
   height: 52rpx;
 }
 

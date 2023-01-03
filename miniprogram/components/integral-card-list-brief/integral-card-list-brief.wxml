@@ -1,10 +1,17 @@
 <view class="integral-card-list-brief-container">
   <view class="left-overview">
       <view>积分商城</view>
-      <view class="user-ingegral">用户积分：50</view>
+      <view 
+        class="user-ingegral" 
+        wx:if="{{ userInfo && userIntegrals }}">用户积分：{{ userIntegrals.checkinPointsBalance }}
+      </view>
     </view>
     <view class="right-tips">
       <view class="rules" bindtap="showRules">活动规则</view>
-      <view class="exchange-record" bindtap="showExchangeRecord">兑换记录</view>
+      <view 
+        class="exchange-record"
+        wx:if="{{ userInfo }}"
+        bindtap="showExchangeRecord">兑换记录
+      </view>
     </view>
 </view>

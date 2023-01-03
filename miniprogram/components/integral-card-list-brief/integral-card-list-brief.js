@@ -1,10 +1,13 @@
 Component({
   properties: {
-
-  },
-
-  data: {
-
+    userInfo: {
+      type: Object,
+      value: null
+    },
+    userIntegrals: {
+      type: Object,
+      value: null
+    }
   },
 
   methods: {

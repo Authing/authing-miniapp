@@ -1,10 +1,9 @@
 Component({
   properties: {
-
-  },
-
-  data: {
-
+    integralData: {
+      type: Object,
+      value: null
+    }
   },
 
   methods: {

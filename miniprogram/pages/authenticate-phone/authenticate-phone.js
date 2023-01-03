@@ -51,14 +51,14 @@ Page({
   },
 
   async cancelLogin () {
-    const [error, res] = await changeQrcodeStatus({
+    const [error] = await changeQrcodeStatus({
       qrcodeId: app.globalData.scanCodeLoginConfig.scene,
       action: 'CANCEL'
     })
 
     if (error) {
       return wx.showToast({
-        title: res.message
+        title: error.message
       })
     }
 

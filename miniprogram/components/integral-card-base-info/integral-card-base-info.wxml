@@ -1,9 +1,9 @@
 <view class="integral-cardbase-info-container">
-  <image src="../../images/integral-card-background.svg" class="background"></image>
-  <image src="../../images/authing-logo.svg" class="logo"></image>
-  <view class="label">B2B</view>
+  <image src="{{ integralData.background }}" class="background"></image>
+  <image src="https://files.authing.co/authing-miniapp/authing-logo.svg" class="logo"></image>
+  <view class="label">{{ integralData.userPoolSceneType }}</view>
   <view class="title">
-    <view class="chinese">体验券 7 天</view>
+    <view class="chinese">体验券 {{ integralData.userPoolExperienceDays }} 天</view>
     <view class="english">COUPON</view>
   </view>
 </view>

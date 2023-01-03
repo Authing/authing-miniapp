@@ -15,12 +15,12 @@ Component({
     _active: '',
     tabbarList: [{
       name: 'integral',
-      iconPath: './images/integral-icon.svg',
-      selectedIconPath: './images/integral-icon-selected.svg'
+      iconPath: 'https://files.authing.co/authing-miniapp/integral-icon.svg',
+      selectedIconPath: 'https://files.authing.co/authing-miniapp/integral-icon-selected.svg'
     }, {
       name: 'mine',
-      iconPath: './images/mine-icon.svg',
-      selectedIconPath: './images/mine-icon-selected.svg'
+      iconPath: 'https://files.authing.co/authing-miniapp/mine-icon.svg',
+      selectedIconPath: 'https://files.authing.co/authing-miniapp/mine-icon-selected.svg'
     }]
   },
 
@@ -35,6 +35,11 @@ Component({
   methods: {
     onClickTab (e) {
       const { name } = e.currentTarget.dataset
+      
+      if (name === this.data._active) {
+        return
+      }
+      
       wx.redirectTo({
         url: routerMap[name]
       })

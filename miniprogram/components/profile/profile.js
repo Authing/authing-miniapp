@@ -1,5 +1,7 @@
 import { formatUserInfo } from '../../utils/utils'
 
+import { checkin } from '../../apis/index'
+
 const app = getApp()
 
 Component({
@@ -76,6 +78,10 @@ Component({
       })
 
       this.triggerEvent('onLogin', _userInfo)
+    },
+
+    checkin () {
+      checkin()
     }
   }
 })

@@ -1,22 +1,22 @@
 <view class="integral-exchanged-card-container">
   <view class="top-container">
     <image 
-      src="../../images/integral-card-background.svg" 
+      src="{{ integralData.background }}" 
       class="integral-card-background">
     </image>
-    <image src="../../images/authing-logo.svg" class="logo"></image>
-    <view class="label">B2B</view>
+    <image src="https://files.authing.co/authing-miniapp/authing-logo.svg" class="logo"></image>
+    <view class="label">{{ integralData.userPoolSceneType }}</view>
     <view class="code-box">
-      <view class="code-content">兑换码：12345678901234</view>
+      <view class="code-content">兑换码：{{ integralData.couponCode }}</view>
       <image src="./images/copy-button.svg" class="copy-button"></image>
     </view>
   </view>
   <view class="bottom-container">
-    <view class="title">B2B 用户池体验券 7 天</view>
+    <view class="title">{{ integralData.userPoolSceneType }} 用户池体验券 {{ integralData.couponExperienceDays }} 天</view>
     <view class="tips">
-      <view>所需积分：50</view>
+      <view>所需积分：{{ integralData.points }}</view>
       <view class="separator">|</view>
-      <view>领取时间：2022.12.31</view>
+      <view>领取时间：{{ integralData.createdAt }}</view>
     </view>
   </view>
 </view>

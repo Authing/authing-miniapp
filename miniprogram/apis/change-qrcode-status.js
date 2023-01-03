@@ -4,12 +4,12 @@ export async function changeQrcodeStatus (options) {
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
   if (loginStateError) {
-    return Promise.reject()
+    return Promise.resolve(loginStateError, undefined)
   }
 
   const { qrcodeId, action } = options
 
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     // https://api.authing.cn/openapi/v3/authentication/#tag/%E7%99%BB%E5%BD%95/%E6%89%AB%E7%A0%81%E7%99%BB%E5%BD%95/operation/SignInV3Controller_changeQRCodeStatus
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v3/change-qrcode-status',
@@ -23,7 +23,6 @@ export async function changeQrcodeStatus (options) {
         action
       },
       success: res => {
-        console.log('scan login res: ', res)
         if (res.data.statusCode === 200) {
           resolve([undefined, res.data])
         } else {

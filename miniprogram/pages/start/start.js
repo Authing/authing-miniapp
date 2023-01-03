@@ -1,6 +1,6 @@
 import { formatUserInfo } from '../../utils/utils'
 
-import { changeQrcodeStatus } from '../../apis/index'
+import { changeQrcodeStatus, checkin } from '../../apis/index'
 
 const app = getApp()
 
@@ -53,6 +53,7 @@ Page({
       userInfo: e.detail,
       isShowLoginModal: false
     })
+    checkin()
     this.authenticatePhoneAndChangeQrcodeStatus()
   },
 

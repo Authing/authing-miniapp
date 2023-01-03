@@ -1,5 +1,4 @@
 export function formatUserInfo (userInfo) {
-  console.log(userInfo)
   const genderMap = {
     M: '男',
     F: '女',
