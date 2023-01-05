@@ -2,17 +2,27 @@ import { getUserIntegrals, getExchangedRecordList } from '../../apis/index'
 
 import { formatDate } from '../../utils/utils'
 
+const app = getApp()
+
 Page({
   data: {
     userIntegrals: null,
     exchangedRecordList: [],
     page: 1,
-    totalCount: 0
+    totalCount: 0,
+    enterpriseWechatQrcode: 'https://files.authing.co/authing-website/wechat-enterprice-code.png'
   },
 
-  onLoad() {
+  async onLoad() {
+    await app.getAuthing()
     this.getUserIntegrals()
     this.getExchangedRecordList()
+  },
+
+  onClickQrcode () {
+    wx.previewImage({
+      urls: [this.data.enterpriseWechatQrcode]
+    })
   },
 
   onReachBottom () {
@@ -52,6 +62,7 @@ Page({
         createdAt: formatDate(item.createdAt)
       }
     }) || []
+
     const exchangedRecordList = this.data.exchangedRecordList.concat(list)
 
     this.setData({

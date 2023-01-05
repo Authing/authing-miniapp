@@ -1,12 +1,10 @@
 <view class="integral-index-container">
-  <exchange-modal isShow="{{ isShowExchangeModal }}" bindclose="closeExchangeModal"></exchange-modal>
-
   <profile
     userInfo="{{ userInfo }}" 
     bindonLogin="onLogin"
     class="profile-container"></profile>
 
-  <view class="integral-card-list center-horizontally-container">
+  <view class="integral-card-list center-horizontally-container" wx:if="{{ integralList && integralList.length }}">
     <integral-card-list-brief userInfo="{{ userInfo }}" userIntegrals="{{ userIntegrals }}"></integral-card-list-brief>
     <integral-cross-line></integral-cross-line>
 
@@ -27,4 +25,10 @@
   </view>
 
   <tabbar></tabbar>
+
+  <exchange-modal
+    isShow="{{ isShowExchangeModal }}" 
+    bindclose="onAuthenticatePhone"
+    integralData="{{ currentExchangedIntegral }}">
+  </exchange-modal>
 </view>

@@ -10,13 +10,21 @@ Component({
     }
   },
 
+  data: {
+    isShowActiveRule: false,
+    activeRuleContent: `每天首次登录可获取 10 积分，积分可用于兑换 Authing 用户池体验券。\n\n 本商城解释权归北京蒸汽记忆有限公司所有。`
+  },
+
   methods: {
     showRules () {
-      wx.showModal({
-        title: '活动规则',
-        content: '这里是活动规则这里是活动规则这里是活动规则这里是活动规则这里是活动规则这里是活动规则这里是活动规则这里是活动规则这里是活动规则这里是活动规则',
-        showCancel: false,
-        confirmText: '好的'
+      this.setData({
+        isShowActiveRule: true
+      })
+    },
+
+    onCloseActiveRuleModal () {
+      this.setData({
+        isShowActiveRule: false
       })
     },
 

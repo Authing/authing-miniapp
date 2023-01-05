@@ -7,6 +7,11 @@ Component({
   },
 
   methods: {
-
+    copyCode (e) {
+      const { couponcode } = e.target.dataset
+      wx.setClipboardData({
+        data: couponcode
+      })
+    }
   }
 })

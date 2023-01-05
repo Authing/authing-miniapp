@@ -8,7 +8,12 @@
     <view class="label">{{ integralData.userPoolSceneType }}</view>
     <view class="code-box">
       <view class="code-content">兑换码：{{ integralData.couponCode }}</view>
-      <image src="./images/copy-button.svg" class="copy-button"></image>
+      <image 
+        src="./images/copy-button.svg" 
+        class="copy-button" 
+        bindtap="copyCode" 
+        data-couponCode="{{ integralData.couponCode}}">
+      </image>
     </view>
   </view>
   <view class="bottom-container">

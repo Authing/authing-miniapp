@@ -6,6 +6,7 @@
         wx:if="{{ userInfo && userIntegrals }}">用户积分：{{ userIntegrals.checkinPointsBalance }}
       </view>
     </view>
+
     <view class="right-tips">
       <view class="rules" bindtap="showRules">活动规则</view>
       <view 
@@ -15,3 +16,10 @@
       </view>
     </view>
 </view>
+
+<normal-modal
+  isShow="{{ isShowActiveRule }}"
+  title="活动规则"
+  content="{{ activeRuleContent }}"
+  bindonClose="onCloseActiveRuleModal">
+</normal-modal>

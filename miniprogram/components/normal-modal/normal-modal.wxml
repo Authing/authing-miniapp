@@ -1,0 +1,13 @@
+<view class="normal-modal-container" wx:if="{{ isShow }}">
+  <view class="mask"></view>
+
+  <view class="box">
+    <view class="title" wx:if="{{ title }}">{{ title }}</view>
+    
+    <view class="content" wx:if="{{ content }}">
+      <text >{{ content }}</text>
+    </view>
+
+    <button class="button" bindtap="onClose">{{ onCloseText }}</button>
+  </view>
+</view>

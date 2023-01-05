@@ -1,4 +1,4 @@
-<view class="integral-cardbase-info-container">
+<view class="integral-cardbase-info-container" wx:if="{{ integralData }}">
   <image src="{{ integralData.background }}" class="background"></image>
   <image src="https://files.authing.co/authing-miniapp/authing-logo.svg" class="logo"></image>
   <view class="label">{{ integralData.userPoolSceneType }}</view>

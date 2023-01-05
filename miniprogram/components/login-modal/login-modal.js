@@ -29,7 +29,7 @@ Component({
       })
       
       const [error] = await app.authing.loginByCode({
-        extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnidentifier,
+        extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
         wechatMiniProgramCodePayload: {
           encryptedData,
           iv
@@ -57,7 +57,8 @@ Component({
 
       if (error) {
         return wx.showToast({
-          title: '用户信息获取失败，请重新登录'
+          title: '用户信息获取失败，请重新登录',
+          icon: 'none'
         })
       }
 

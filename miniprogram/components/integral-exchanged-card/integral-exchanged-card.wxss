@@ -49,13 +49,16 @@
   left: 50%;
   margin-top: -32rpx;
   margin-left: -210rpx;
-  width: 420rpx;
+  padding: 12rpx 32rpx;
+  box-sizing: border-box;
+  width: 430rpx;
   height: 64rpx;
   background-color: #fff;
 }
 
 .integral-exchanged-card-container .top-container .code-box .code-content {
-  width: 308rpx;
+  margin-right: 18rpx;
+  width: 340rpx;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

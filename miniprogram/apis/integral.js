@@ -19,7 +19,7 @@ export async function getIntegralList () {
         }
       },
       fail: (res) => {
-        resolve(res, undefined)
+        resolve([res, undefined])
       }
     })
   })
@@ -37,7 +37,7 @@ export async function getUserIntegrals () {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users/points/mypoints',
+      url: app.globalData.miniappConfig.host + '/api/v2/users-points/mypoints',
       method: 'GET',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -51,7 +51,7 @@ export async function getUserIntegrals () {
         }
       },
       fail: (res) => {
-        resolve(res, undefined)
+        resolve([res, undefined])
       }
     })
   })
@@ -69,7 +69,7 @@ export async function checkin () {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users/points/checkin',
+      url: app.globalData.miniappConfig.host + '/api/v2/users-points/checkin',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -83,7 +83,7 @@ export async function checkin () {
         }
       },
       fail: (res) => {
-        resolve(res, undefined)
+        resolve([res, undefined])
       }
     })
   })
@@ -109,7 +109,7 @@ export async function exchangeIntegral (options) {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users/points/redeem',
+      url: app.globalData.miniappConfig.host + '/api/v2/users-points/redeem',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -127,7 +127,7 @@ export async function exchangeIntegral (options) {
         }
       },
       fail: (res) => {
-        resolve(res, undefined)
+        resolve([res, undefined])
       }
     })
   })
@@ -147,7 +147,7 @@ export async function getExchangedRecordList (options) {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users/points/pageRedeemHist',
+      url: app.globalData.miniappConfig.host + '/api/v2/users-points/pageRedeemHist',
       method: 'GET',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -165,7 +165,7 @@ export async function getExchangedRecordList (options) {
         }
       },
       fail: (res) => {
-        resolve(res, undefined)
+        resolve([res, undefined])
       }
     })
   })

@@ -1,4 +1,6 @@
 {
   "component": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "normal-modal": "../normal-modal/normal-modal"
+  }
 }

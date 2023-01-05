@@ -1,40 +1,101 @@
 import { Authing } from '@authing/miniapp-wx'
 
-const allMiniappConfig = {
-  test: {
-    // appId: '63ae849aff68b0282d2c4968',
-    // host: 'https://core.mysql.authing-inc.co',
-    // userPoolId: '63ae80eca21547efd0369aec',
-    // extIdpConnidentifier: 'wx-miniapp-scan-login'
-
-    appId: '63aef24591737c415b67b1e6',
-    host: 'https://core.authing.me',
-    userPoolId: '63aea02c5e971318ce5b2d5b',
-    extIdpConnidentifier: 'wx-miniapp-scan-login'
-  },
-  prod: {
-
-  }
-}
-
-const environment = 'test'
-
-const miniappConfig = allMiniappConfig[environment]
-
-const authing = new Authing(miniappConfig)
+const configAPIHost = 'https://core.mysql.authing-inc.co'
 
 App({
   globalData: {
-    miniappConfig,
-    environment,
-    scanCodeLoginConfig: {}
+    miniappConfig: {
+      // 以下字段用接口动态获取
+      host: '',
+      appId: '',
+      appName: '',
+      userPoolId: '',
+      extIdpConnIdentifier: '',
+      showPointsFunc: false
+    },
+    scanCodeLoginConfig: {
+      // 小程序扫码登录的 scene
+      scene: ''
+    }
   },
 
-  authing,
+  authing: null,
+
+  initAuthing (options = {}) {
+    const { userpool, app, extIdpConnIdentifier, host, showPointsFunc } = options
+
+    this.globalData.miniappConfig = {
+      appId: app.id,
+      appName: app.name,
+      userPoolId: userpool.id,
+      host,
+      extIdpConnIdentifier,
+      showPointsFunc
+    }
+
+    this.authing = new Authing({
+      appId: app.id,
+      host,
+      userPoolId: userpool.id
+    })
+  },
+
+  async getAuthing (options = {}) {
+    if (this.authing) {
+      return this.authing
+    }
+
+    const { qrcodeId } = options
+
+    const [error, config] = await this.getAppConfig({
+      qrcodeId
+    })
+
+    if (error) {
+      wx.showToast({
+        title: error.message || 'App config 获取失败',
+        icon: 'none'
+      })
+      return null
+    }
+
+    this.initAuthing(config.data)
+
+    return this.authing
+  },
+
+  async getAppConfig (options = {}) {
+    const { qrcodeId = '' } = options
+
+    const data = {}
+
+    if (qrcodeId) {
+      data.qrcodeId = qrcodeId
+    }
+
+    return new Promise((resolve) => {
+      wx.request({
+        url: configAPIHost + '/api/v2/wechat-miniprogram-config/launch-params',
+        method: 'GET',
+        data,
+        success: res => {
+          if (res.data.code === 200) {
+            resolve([undefined, res.data])
+          } else {
+            resolve([res.data, undefined])
+          }
+        },
+        fail: res => {
+          resolve([res, undefined])
+        }
+      })
+    })
+  },
 
   showLoginErrorToast () {
     wx.showToast({
-      title: '操作失败，请重试',
+      title: '请重新登录',
+      icon: 'none'
     })
   }
 })

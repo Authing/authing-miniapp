@@ -1,4 +1,4 @@
-.exchange-modal-container {
+.normal-modal-container {
   position: fixed;
   z-index: 100;
   top: 0;
@@ -7,7 +7,7 @@
   height: 100%;
 }
 
-.exchange-modal-container .mask {
+.normal-modal-container .mask {
   position: absolute;
   z-index: 1;
   top: 0;
@@ -18,7 +18,7 @@
   opacity: 0.5;
 }
 
-.exchange-modal-container .box {
+.normal-modal-container .box {
   position: absolute;
   z-index: 2;
   top: 50%;
@@ -33,20 +33,21 @@
   box-sizing: border-box;
 }
 
-.exchange-modal-container .box .title {
+.normal-modal-container .box .title {
   margin-bottom: 32rpx;
   font-size: 34rpx;
   font-weight: 600;
 }
 
-.exchange-modal-container .box .tips {
+.normal-modal-container .box .content {
   margin: 32rpx 0 64rpx 0;
+  text-align: left;
   font-size: 34rpx;
   color: rgba(0, 0, 0, 0.5);
 }
 
-.exchange-modal-container .box .autheticate-button {
-  margin: 0 auto 24rpx auto;
+.normal-modal-container .box .button {
+  margin: 0 auto 0 auto;
   width: 196rpx;
   height: 80rpx;
   background-color: #215AE5;

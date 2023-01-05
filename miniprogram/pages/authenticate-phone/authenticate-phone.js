@@ -1,4 +1,4 @@
-import { changeQrcodeStatus } from '../../apis/index'
+import { changeQrcodeStatus, updatePhone } from '../../apis/index'
 
 const app = getApp()
 
@@ -7,7 +7,8 @@ Page({
     userInfo: null
   },
 
-  onLoad() {
+  async onLoad() {
+    await app.getAuthing()
     this.getUserInfo()
   },
 
@@ -24,26 +25,37 @@ Page({
   async getPhone (e) {
     const { code } = e.detail
 
-    // const [error, phoneInfo] = await app.authing.getPhone({
-    //   extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnidentifier,
-    //   code
-    // })
+    const [phoneInfoError, phoneInfo] = await app.authing.getPhone({
+      extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
+      code
+    })
     
-    // if (error) {
-    //   return wx.showToast({
-    //     title: '手机号解析失败，请重新操作',
-    //   })
-    // }
+    if (phoneInfoError) {
+      return wx.showToast({
+        title: '手机号解析失败，请重新操作',
+        icon: 'none'
+      })
+    }
+
     // 走接口绑定手机号
-    // console.log(phoneInfo.phoneNumber)
+    const [updatePhoneError] = await updatePhone({
+      phone: phoneInfo.phoneNumber
+    })
+
+    if (updatePhoneError) {
+      return wx.showToast({
+        title: updatePhoneError.message,
+        icon: 'none'
+      })
+    }
 
     // 修改二维码状态
-    const [error] = await changeQrcodeStatus({
+    const [changeQrcodeStatusError] = await changeQrcodeStatus({
       qrcodeId: app.globalData.scanCodeLoginConfig.scene,
       action: 'CONFIRM'
     })
 
-    if (!error) {
+    if (!changeQrcodeStatusError) {
       wx.redirectTo({
         url: '/pages/scan-qrcode-login-success/scan-qrcode-login-success',
       })
@@ -51,16 +63,10 @@ Page({
   },
 
   async cancelLogin () {
-    const [error] = await changeQrcodeStatus({
+    await changeQrcodeStatus({
       qrcodeId: app.globalData.scanCodeLoginConfig.scene,
       action: 'CANCEL'
     })
-
-    if (error) {
-      return wx.showToast({
-        title: error.message
-      })
-    }
 
     wx.navigateBack()
   }

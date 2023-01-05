@@ -9,7 +9,7 @@
       <view class="remain-count">
         <view>所需积分：{{ integralData.points }}</view>
         <view class="cross-line">|</view>
-        <view>剩余 {{ integralData.remain }} 张</view>
+        <view>剩余 {{ integralData.remain > 0 ? integralData.remain : 0 }} 张</view>
       </view>
     </view>
     <view 

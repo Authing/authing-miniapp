@@ -62,5 +62,5 @@
 
   <login-modal isShow="{{ isShowLoginModal }}" bindonLogin="onLogin"></login-modal>
 
-  <tabbar active="mine"></tabbar>
+  <tabbar active="mine" wx:if="{{ !isFromScanCode }}"></tabbar>
 </view>

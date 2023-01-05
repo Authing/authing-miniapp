@@ -3,34 +3,16 @@ Component({
     isShow: {
       type: Boolean,
       value: false
-    }
-  },
-
-  data: {
-    _isShow: false
-  },
-
-  lifetimes: {
-    attached () {
-      this.setData({
-        _isShow: this.data.isShow
-      })
-    }
-  },
-
-  observers: {
-    'isShow': function (value) {
-      this.setData({
-        _isShow: value
-      })
+    },
+    integralData: {
+      type: Object,
+      value: null
     }
   },
 
   methods: {
     authenticatePhone (e) {
-      this.setData({
-        _isShow: false
-      })
+      this.triggerEvent('close', e.detail)
     }
   }
 })
