@@ -4,8 +4,8 @@
     userInfo="{{ userInfo }}" 
     bindonLogin="onLogin">
   </profile>
-  
-  <view wx:if="{{ !userInfo }}" class="no-login-box" bindtap="toLogin">
+
+  <view wx:if="{{ !userInfo }}" class="no-login-box">
     <image src="./images/empty_optimized.png" class="no-login-icon"></image>
     <view>登录 / 注册，获取您的用户信息</view>
   </view>
@@ -62,5 +62,5 @@
 
   <login-modal isShow="{{ isShowLoginModal }}" bindonLogin="onLogin"></login-modal>
 
-  <tabbar active="mine" wx:if="{{ !isFromScanCode }}"></tabbar>
+  <tabbar active="mine" wx:if="{{ isShowTabbar }}"></tabbar>
 </view>

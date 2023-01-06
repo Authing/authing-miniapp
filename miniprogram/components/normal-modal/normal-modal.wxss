@@ -34,7 +34,7 @@
 }
 
 .normal-modal-container .box .title {
-  margin-bottom: 32rpx;
+  margin-bottom: 42rpx;
   font-size: 34rpx;
   font-weight: 600;
 }

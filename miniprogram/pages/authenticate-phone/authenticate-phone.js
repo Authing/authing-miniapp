@@ -1,4 +1,4 @@
-import { changeQrcodeStatus, updatePhone } from '../../apis/index'
+import { changeQrcodeStatus, updatePhone, getCryptedPhone } from '../../apis/index'
 
 const app = getApp()
 
@@ -25,8 +25,8 @@ Page({
   async getPhone (e) {
     const { code } = e.detail
 
-    const [phoneInfoError, phoneInfo] = await app.authing.getPhone({
-      extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
+    const [phoneInfoError, phoneInfo] = await getCryptedPhone({
+      extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
       code
     })
     
@@ -38,16 +38,11 @@ Page({
     }
 
     // 走接口绑定手机号
-    const [updatePhoneError] = await updatePhone({
-      phone: phoneInfo.phoneNumber
+    await updatePhone({
+      phoneCountryCode: phoneInfo.phone_info.countryCode,
+      phone: phoneInfo.phone_info.purePhoneNumber,
+      codeForUpdatePhone: phoneInfo.codeForUpdatePhone
     })
-
-    if (updatePhoneError) {
-      return wx.showToast({
-        title: updatePhoneError.message,
-        icon: 'none'
-      })
-    }
 
     // 修改二维码状态
     const [changeQrcodeStatusError] = await changeQrcodeStatus({

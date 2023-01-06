@@ -34,9 +34,20 @@ Component({
 
   methods: {
     async toLogin () {
-      const { encryptedData, iv } = await wx.getUserProfile({
-        desc: 'getUserProfile'
-      })
+      wx.showLoading()
+
+      let encryptedData = ''
+      let iv = ''
+
+      try {
+        const res = await wx.getUserProfile({
+          desc: 'getUserProfile'
+        })
+        encryptedData = res.encryptedData
+        iv = res.iv
+      } catch (e) {
+        return wx.hideLoading()
+      }
       
       const [error] = await app.authing.loginByCode({
         extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
@@ -50,10 +61,6 @@ Component({
       })
 
       if (error) {
-        console.log('loginByCode error: ', error)
-        return wx.showModal({
-          content: JSON.stringify(error)
-        })
         return app.showLoginErrorToast()
       }
 

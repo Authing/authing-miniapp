@@ -3,7 +3,8 @@ import {
   getUserIntegrals,
   checkin,
   exchangeIntegral,
-  updatePhone
+  updatePhone,
+  getCryptedPhone
 } from '../../apis/index'
 
 const app = getApp()
@@ -43,6 +44,13 @@ Page({
   },
 
   async getUserInfo () {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo
+      })
+      return
+    }
+
     const [error, userInfo] = await app.authing.getUserInfo()
 
     if (error) {
@@ -137,16 +145,19 @@ Page({
 
     // 用户允许授权手机号
     // 将手机号更新到用户信息中
-    const [phoneInfoError, phoneInfo] = await app.authing.getPhone({
-      extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
+    const [phoneInfoError, phoneInfo] = await getCryptedPhone({
+      extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
       code
     })
 
     if (!phoneInfoError) {
       // 更新手机号
       await updatePhone({
-        phone: phoneInfo.phoneNumber
+        phoneCountryCode: phoneInfo.phone_info.countryCode,
+        phone: phoneInfo.phone_info.purePhoneNumber,
+        codeForUpdatePhone: phoneInfo.codeForUpdatePhone
       })
+  
       // 无论是否更新成功，都跳转到到兑换记录页面
       wx.navigateTo({
         url: '/pages/exchange-records/exchange-records'

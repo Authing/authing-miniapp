@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/integral-index/integral-index",
     "pages/exchange-records/exchange-records",
-    "pages/start/start",
+    "pages/mine/mine",
     "pages/authenticate-phone/authenticate-phone",
     "pages/scan-qrcode-login-success/scan-qrcode-login-success"
   ],

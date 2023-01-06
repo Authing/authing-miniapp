@@ -1,12 +1,17 @@
 import { Authing } from '@authing/miniapp-wx'
 
-const configAPIHost = 'https://core.mysql.authing-inc.co'
+// ***** 上线前需要修改环境变量 *****
+const environment = 'test' // test / prod
+
+const configAPIHost = environment === 'test'
+  ? 'https://core.mysql.authing-inc.co'
+  : 'https://core.authing.cn'
 
 App({
   globalData: {
     miniappConfig: {
-      // 以下字段用接口动态获取
       host: '',
+      // 以下字段用接口动态获取
       appId: '',
       appName: '',
       userPoolId: '',
@@ -16,26 +21,34 @@ App({
     scanCodeLoginConfig: {
       // 小程序扫码登录的 scene
       scene: ''
+    },
+    userInfo: null
+  },
+
+  onLaunch (options = {}) {
+    const { scene } = options.query
+    if (scene) {
+      this.globalData.scanCodeLoginConfig.scene = scene
     }
   },
 
   authing: null,
 
   initAuthing (options = {}) {
-    const { userpool, app, extIdpConnIdentifier, host, showPointsFunc } = options
+    const { userpool, app, extIdpConnIdentifier, showPointsFunc } = options
 
     this.globalData.miniappConfig = {
       appId: app.id,
       appName: app.name,
       userPoolId: userpool.id,
-      host,
       extIdpConnIdentifier,
-      showPointsFunc
+      showPointsFunc,
+      host: configAPIHost
     }
 
     this.authing = new Authing({
       appId: app.id,
-      host,
+      host: configAPIHost,
       userPoolId: userpool.id
     })
   },

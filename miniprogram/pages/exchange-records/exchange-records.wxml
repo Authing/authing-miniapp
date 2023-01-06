@@ -10,7 +10,7 @@
       bindtap="onClickQrcode"
       class="qrcode">
     </image>
-    <view class="tips">如需体验，请微信扫码联系 Authing 专属客服</view>
+    <view class="tips">如需体验，请点击并识别二维码添加 Authing 专属客服</view>
   </view>
   <integral-cross-line></integral-cross-line>
 

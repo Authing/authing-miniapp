@@ -8,7 +8,7 @@ export function formatUserInfo (userInfo) {
     ...userInfo,
     gender: genderMap[userInfo.gender],
     createdAt: formatDate(userInfo.createdAt),
-    birthdate: formatDate(userInfo.birthdate)
+    birthdate: userInfo.birthdate ? formatDate(userInfo.birthdate) : '-'
   }
   return _userInfo
 }

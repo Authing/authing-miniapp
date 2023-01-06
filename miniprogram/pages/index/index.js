@@ -5,8 +5,11 @@ let timer = null
 Page({
   onLoad() {
     timer = setTimeout(() => {
+      const url = app.globalData.scanCodeLoginConfig.scene
+        ? '/pages/mine/mine'
+        : '/pages/integral-index/integral-index'
       wx.redirectTo({
-        url: '/pages/integral-index/integral-index'
+        url
       })
     }, 1000)
   },

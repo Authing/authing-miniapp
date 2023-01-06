@@ -37,7 +37,7 @@ export async function getUserIntegrals () {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users-points/mypoints',
+      url: app.globalData.miniappConfig.host + '/api/v2/user-points/mypoints',
       method: 'GET',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -69,7 +69,7 @@ export async function checkin () {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users-points/checkin',
+      url: app.globalData.miniappConfig.host + '/api/v2/user-points/checkin',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -109,7 +109,7 @@ export async function exchangeIntegral (options) {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users-points/redeem',
+      url: app.globalData.miniappConfig.host + '/api/v2/user-points/redeem',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -119,7 +119,6 @@ export async function exchangeIntegral (options) {
         vouchersCode
       },
       success: res => {
-        console.log('res.data: ', res.data)
         if (res.data.code === 200) {
           resolve([undefined, res.data])
         } else {
@@ -147,7 +146,7 @@ export async function getExchangedRecordList (options) {
 
   return new Promise((resolve) => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/users-points/pageRedeemHist',
+      url: app.globalData.miniappConfig.host + '/api/v2/user-points/pageRedeemHist',
       method: 'GET',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,

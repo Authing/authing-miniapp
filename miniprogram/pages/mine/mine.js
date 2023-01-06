@@ -8,13 +8,13 @@ Page({
   data: {
     userInfo: null,
     isShowLoginModal: false,
-    isFromScanCode: false
+    isShowTabbar: false
   },
 
-  async onLoad(options = {}) {
+  async onLoad() {
     wx.hideHomeButton()
 
-    const { scene } = options
+    const { scene } = app.globalData.scanCodeLoginConfig
 
     await app.getAuthing({
       qrcodeId: scene
@@ -25,9 +25,8 @@ Page({
     // 通过扫码登录方式直接进入当前页面
     if (scene) {
       app.globalData.scanCodeLoginConfig.scene = scene
-
       this.setData({
-        isFromScanCode: !!app.globalData.miniappConfig.showPointsFunc
+        isShowTabbar: app.globalData.miniappConfig.showPointsFunc
       })
 
       // 未登录，展示弹窗引导用户去登录
@@ -41,6 +40,10 @@ Page({
         this.authenticatePhoneAndChangeQrcodeStatus()
       }
     } else {
+      this.setData({
+        isShowTabbar: app.globalData.miniappConfig.showPointsFunc
+      })
+
       if (loginStateError) {
         return
       }
@@ -106,36 +109,14 @@ Page({
     })
   },
 
-  async toLogin () {
-    wx.showLoading({
-      title: '加载中',
-    })
-
-    const { encryptedData, iv } = await wx.getUserProfile({
-      desc: 'getUserProfile'
-    })
-    
-    const [error] = await app.authing.loginByCode({
-      extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
-      wechatMiniProgramCodePayload: {
-        encryptedData,
-        iv
-      },
-      options: {
-        scope: 'openid profile offline_access'
-      }
-    })
-
-    if (error) {
-      return app.showLoginErrorToast()
+  async getUserInfo () {
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo
+      })
+      return
     }
 
-    await this.getUserInfo()
-
-    wx.hideLoading()
-  },
-
-  async getUserInfo () {
     const [error, userInfo] = await app.authing.getUserInfo()
 
     if (error) {
