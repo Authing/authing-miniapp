@@ -1,5 +1,10 @@
 <view class="scan-qrcode-login-success-container">
-  <image src="./images/scan-qrcode-login-success-icon.svg" class="login-success-icon"></image>
+  <image 
+    src="https://files.authing.co/authing-miniapp/scan-qrcode-login-success-icon.svg" 
+    class="login-success-icon">
+  </image>
+  
   <view>登录『{{ appName }}』成功，请在 PC 端确认</view>
+  
   <button class="button" bindtap="confirm">确认</button>
 </view>
