@@ -24,7 +24,7 @@ Page({
     }
   },
 
-  async getPhone (e) {
+  async authenticatePhoneAndinvokeLogin (e) {
     const { code } = e.detail
 
     const [phoneInfoError, phoneInfo] = await getCryptedPhone({
@@ -34,7 +34,7 @@ Page({
     
     if (phoneInfoError) {
       return wx.showToast({
-        title: '手机号解析失败，请重新操作',
+        title: phoneInfoError.message || '手机号解析失败，请重新操作',
         icon: 'none'
       })
     }

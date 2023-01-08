@@ -30,7 +30,7 @@
   <button 
     class="button login-button" 
     open-type="getPhoneNumber" 
-    bindgetphonenumber="getPhone">授权
+    bindgetphonenumber="authenticatePhoneAndinvokeLogin">授权
   </button>
   
   <button class="button cancel-login-button" bindtap="cancelLogin">取消授权</button>
