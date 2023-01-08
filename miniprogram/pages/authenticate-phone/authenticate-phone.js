@@ -1,5 +1,7 @@
 import { changeQrcodeStatus, updatePhone, getCryptedPhone } from '../../apis/index'
 
+import { delay } from '../../utils/utils'
+
 const app = getApp()
 
 Page({
@@ -38,11 +40,21 @@ Page({
     }
 
     // 走接口绑定手机号
-    await updatePhone({
+    const [updatePhoneError] = await updatePhone({
       phoneCountryCode: phoneInfo.phone_info.countryCode,
       phone: phoneInfo.phone_info.purePhoneNumber,
       codeForUpdatePhone: phoneInfo.codeForUpdatePhone
     })
+
+    // 即使手机号更新失败，也不能阻断用户登录流程
+    if (updatePhoneError) {
+      wx.showToast({
+        title: updatePhoneError.message || '手机号更新失败，请在控制台个人信息中修改手机号',
+        icon: 'none'
+      })
+
+      await delay()
+    }
 
     // 修改二维码状态
     const [changeQrcodeStatusError] = await changeQrcodeStatus({

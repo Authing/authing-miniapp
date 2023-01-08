@@ -24,3 +24,11 @@ export function formatDate (value) {
 export function fillZero (value) {
   return value >= 10 ? value : ('0' + value)
 }
+
+export async function delay (time = 1000) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve()
+    }, time)
+  })
+}
