@@ -24,7 +24,7 @@ Page({
     }
   },
 
-  async authenticatePhoneAndinvokeLogin (e) {
+  async authenticatePhoneAndInvokeLogin (e) {
     const { code } = e.detail
 
     const [phoneInfoError, phoneInfo] = await getCryptedPhone({
