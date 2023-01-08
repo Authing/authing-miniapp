@@ -26,8 +26,9 @@ Page({
 
   async onShow () {
     await app.getAuthing()
-    this.getIntegralList()
     this.getUserInfo()
+    this.getIntegralList()
+    await checkin()
     this.getUserIntegrals()
   },
 
@@ -44,13 +45,6 @@ Page({
   },
 
   async getUserInfo () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo
-      })
-      return
-    }
-
     const [error, userInfo] = await app.authing.getUserInfo()
 
     if (error) {

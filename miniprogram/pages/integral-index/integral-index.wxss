@@ -13,4 +13,11 @@
   margin: 0 auto;
   width: 654rpx;
   background-color: #fff;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+
+.integral-index-container .integral-card-list .integral-card-item.last-card-item {
+  padding-bottom: 30rpx;
+  box-sizing: border-box;
 }

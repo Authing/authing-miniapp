@@ -4,6 +4,7 @@
   padding: 32rpx 32rpx;
   box-sizing: border-box;
   background-color: #fff;
+  border-radius: 16rpx;
 }
 
 .profile-box {
@@ -15,18 +16,7 @@
   margin-right: 24rpx;
   width: 96rpx;
   height: 96rpx;
-}
-
-.profile-container .overview {
-
-}
-
-.profile-container .overview.no-login {
-  
-}
-
-.profile-container .overview.has-login {
-
+  border-radius: 50%;
 }
 
 .profile-container .overview .username {

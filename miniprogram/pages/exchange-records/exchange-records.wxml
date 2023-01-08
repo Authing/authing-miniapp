@@ -14,12 +14,20 @@
   </view>
   <integral-cross-line></integral-cross-line>
 
-  <block wx:for="{{ exchangedRecordList }}" wx:for-item="item" wx:key="id" >
-    <integral-exchanged-card integralData="{{ item }}"></integral-exchanged-card>
-    <view class="cross-line">
-      <integral-cross-line></integral-cross-line>
-    </view>
+  <block wx:if="{{ exchangedRecordList.length }}">
+    <block 
+      wx:for="{{ exchangedRecordList }}" 
+      wx:for-item="item" 
+      wx:for-index="index" 
+      wx:key="id" >
+      <integral-exchanged-card integralData="{{ item }}"></integral-exchanged-card>
+      <view class="cross-line" wx:if="{{ index < exchangedRecordList.length - 1 }}">
+        <integral-cross-line></integral-cross-line>
+      </view>
+    </block>
   </block>
+
+  <view wx:else class="no-record">暂无信息</view>
 
 </view>
 

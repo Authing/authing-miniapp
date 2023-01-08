@@ -7,8 +7,12 @@ const configAPIHost = environment === 'test'
   ? 'https://core.mysql.authing-inc.co'
   : 'https://core.authing.cn'
 
+const systemInfo = wx.getSystemInfoSync()
+const isIpx = systemInfo.model.indexOf('iPhone X') > -1
+
 App({
   globalData: {
+    isIpx,
     miniappConfig: {
       host: '',
       // 以下字段用接口动态获取
@@ -25,14 +29,14 @@ App({
     userInfo: null
   },
 
-  onLaunch (options = {}) {
-    const { scene } = options.query
-    if (scene) {
-      this.globalData.scanCodeLoginConfig.scene = scene
+  authing: null,
+
+  resetScanCodeLoginConfig (config) {
+    this.globalData.scanCodeLoginConfig = {
+      ...this.globalData.scanCodeLoginConfig,
+      ...config
     }
   },
-
-  authing: null,
 
   initAuthing (options = {}) {
     const { userpool, app, extIdpConnIdentifier, showPointsFunc } = options
@@ -51,6 +55,10 @@ App({
       host: configAPIHost,
       userPoolId: userpool.id
     })
+  },
+
+  resetAuthing () {
+    this.authing = null
   },
 
   async getAuthing (options = {}) {
@@ -105,9 +113,9 @@ App({
     })
   },
 
-  showLoginErrorToast () {
+  showLoginErrorToast (error) {
     wx.showToast({
-      title: '请重新登录',
+      title: error.message || '请重新登录',
       icon: 'none'
     })
   }

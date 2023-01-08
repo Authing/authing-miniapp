@@ -1,4 +1,4 @@
-<view class="tabbar-container">
+<view class="tabbar-container" style="height: {{ isIpx ? '164rpx' : '96rpx' }}">
   <view 
     wx:for="{{ tabbarList }}" 
     wx:for-item="item"

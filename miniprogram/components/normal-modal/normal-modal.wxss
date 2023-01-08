@@ -24,8 +24,8 @@
   top: 50%;
   left: 50%;
   margin-top: -282rpx;
-  margin-left: -320rpx;
-  width: 640rpx;
+  margin-left: -327rpx;
+  width: 654rpx;
   text-align: center;
   background-color: #fff;
   border-radius: 16rpx;
@@ -47,7 +47,10 @@
 }
 
 .normal-modal-container .box .button {
-  margin: 0 auto 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
   width: 196rpx;
   height: 80rpx;
   background-color: #215AE5;

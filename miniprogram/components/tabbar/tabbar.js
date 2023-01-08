@@ -1,3 +1,5 @@
+const app = getApp()
+
 const routerMap = {
   integral: '/pages/integral-index/integral-index',
   mine: '/pages/mine/mine'
@@ -12,6 +14,7 @@ Component({
   },
 
   data: {
+    isIpx: app.globalData.isIpx,
     _active: '',
     tabbarList: [{
       name: 'integral',

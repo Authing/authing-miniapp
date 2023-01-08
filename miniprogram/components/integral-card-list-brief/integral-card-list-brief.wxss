@@ -1,9 +1,6 @@
 .integral-card-list-brief-container {
   padding: 32rpx 32rpx;
   background-color: #fff;
-}
-
-.integral-card-list-brief-container  {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -30,8 +27,8 @@
   color: #215AE5;
 }
 
-.integral-card-list-brief-container .right-tips .rules {
-  margin-right: 32rpx;
+.integral-card-list-brief-container .right-tips .exchange-record {
+  margin-left: 32rpx;
 }
 
 .integral-card-list-brief-container .integral-card-line {

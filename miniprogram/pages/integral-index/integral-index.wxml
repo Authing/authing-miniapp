@@ -4,23 +4,30 @@
     bindonLogin="onLogin"
     class="profile-container"></profile>
 
-  <view class="integral-card-list center-horizontally-container" wx:if="{{ integralList && integralList.length }}">
-    <integral-card-list-brief userInfo="{{ userInfo }}" userIntegrals="{{ userIntegrals }}"></integral-card-list-brief>
+  <view 
+    class="integral-card-list center-horizontally-container" 
+    wx:if="{{ integralList && integralList.length }}">
+
+    <integral-card-list-brief 
+      userInfo="{{ userInfo }}" 
+      userIntegrals="{{ userIntegrals }}">
+    </integral-card-list-brief>
     <integral-cross-line></integral-cross-line>
 
     <view 
       wx:for="{{ integralList }}" 
       wx:for-item="item"
+      wx:for-index="index"
       wx:key="id" 
       class="tabbar-item"
-      class="integral-card-item">
+      class="integral-card-item {{ index === integralList.length - 1 ? 'last-card-item' : '' }}">
       <integral-card-no-exchange 
         integralData="{{ item }}"
         userIntegrals="{{ userIntegrals }}"
         userInfo="{{ userInfo }}"
         bindtoExchange="toExchange">
       </integral-card-no-exchange>  
-      <integral-cross-line></integral-cross-line>
+      <integral-cross-line wx:if="{{ index < integralList.length - 1 }}"></integral-cross-line>
     </view>
   </view>
 

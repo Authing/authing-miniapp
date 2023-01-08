@@ -24,7 +24,6 @@ Page({
 
     // 通过扫码登录方式直接进入当前页面
     if (scene) {
-      app.globalData.scanCodeLoginConfig.scene = scene
       this.setData({
         isShowTabbar: app.globalData.miniappConfig.showPointsFunc
       })
@@ -60,6 +59,10 @@ Page({
     }
   },
 
+  onShow () {
+    this.getUserInfo()
+  },
+
   async onLogin (e) {
     this.setData({
       userInfo: e.detail,
@@ -75,45 +78,54 @@ Page({
       return
     }
 
-    const [error] = await changeQrcodeStatus({
+    // 先修改一次二维码状态，确认已扫码
+    const [scanError] = await changeQrcodeStatus({
       qrcodeId: app.globalData.scanCodeLoginConfig.scene,
       action: 'SCAN'
     })
 
-    if (error) {
+    if (scanError) {
       return wx.showToast({
-        title: '二维码状态更新失败，请重新扫码',
+        title: scanError.message || '二维码状态更新失败，请重新扫码',
         icon: 'none'
+      })
+    }
+
+    // 未绑定手机号
+    if (!this.data.userInfo.phone) {
+      return wx.navigateTo({
+        url: '/pages/authenticate-phone/authenticate-phone',
       })
     }
 
     // 如果已绑定手机号：
     // 1. 修改二维码状态
     // 2. 跳转到登录成功页面
-    if (this.data.userInfo.phone) {
-      changeQrcodeStatus({
-        qrcodeId: app.globalData.scanCodeLoginConfig.scene,
-        action: 'CONFIRM'
-      })
+    const [confirmError] = await changeQrcodeStatus({
+      qrcodeId: app.globalData.scanCodeLoginConfig.scene,
+      action: 'CONFIRM'
+    })
 
-      wx.navigateTo({
-        url: '/pages/scan-qrcode-login-success/scan-qrcode-login-success',
+    if (confirmError) {
+      return wx.showToast({
+        title: confirmError.message || '二维码状态更新失败，请重新扫码',
+        icon: 'none'
       })
-
-      return
     }
 
-    // 未绑定手机号
     wx.navigateTo({
-      url: '/pages/authenticate-phone/authenticate-phone',
+      url: '/pages/scan-qrcode-login-success/scan-qrcode-login-success',
     })
   },
 
   async getUserInfo () {
-    if (app.globalData.userInfo) {
-      this.setData({
-        userInfo: app.globalData.userInfo
-      })
+    if (!app.authing) {
+      return
+    }
+
+    const [loginStateError] = await app.authing.getLoginState()
+
+    if (loginStateError) {
       return
     }
 
@@ -149,7 +161,9 @@ Page({
           userInfo: null
         })
 
-        app.globalData.scanCodeLoginConfig.scene = ''
+        app.resetScanCodeLoginConfig({
+          scene: ''
+        })
       }
     })
   }

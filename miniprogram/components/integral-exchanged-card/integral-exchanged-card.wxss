@@ -20,7 +20,7 @@
 
 .integral-exchanged-card-container .top-container .logo {
   position: absolute;
-  top: 12rpx;
+  top: 20rpx;
   left: 20rpx;
   width: 124rpx;
   height: 32rpx;
@@ -28,7 +28,7 @@
 
 .integral-exchanged-card-container .top-container .label {
   position: absolute;
-  top: 12rpx;
+  top: 20rpx;
   right: 20rpx;
   width: 56rpx;
   height: 28rpx;
@@ -54,6 +54,7 @@
   width: 430rpx;
   height: 64rpx;
   background-color: #fff;
+  border-radius: 8rpx;
 }
 
 .integral-exchanged-card-container .top-container .code-box .code-content {

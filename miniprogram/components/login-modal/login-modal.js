@@ -26,24 +26,24 @@ Component({
     async toLogin () {
       wx.showLoading()
 
-      let encryptedData = ''
-      let iv = ''
+      // let encryptedData = ''
+      // let iv = ''
 
-      try {
-        const res = await wx.getUserProfile({
-          desc: 'getUserProfile'
-        })
-        encryptedData = res.encryptedData
-        iv = res.iv
-      } catch (e) {
-        return wx.hideLoading()
-      }
-      
+      // try {
+      //   const res = await wx.getUserProfile({
+      //     desc: 'getUserProfile'
+      //   })
+      //   encryptedData = res.encryptedData
+      //   iv = res.iv
+      // } catch (e) {
+      //   return wx.hideLoading()
+      // }
+
       const [error] = await app.authing.loginByCode({
         extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
         wechatMiniProgramCodePayload: {
-          encryptedData,
-          iv
+          encryptedData: '',
+          iv: ''
         },
         options: {
           scope: 'openid profile offline_access'
@@ -51,10 +51,12 @@ Component({
       })
 
       if (error) {
-        return app.showLoginErrorToast()
+        return app.showLoginErrorToast(error)
       }
 
-      this.getUserInfo()
+      await this.getUserInfo()
+
+      wx.hideLoading()
     },
 
     async getUserInfo () {
@@ -74,10 +76,6 @@ Component({
       }
 
       const _userInfo = formatUserInfo(userInfo)
-
-      this.setData({
-        _userInfo
-      })
 
       this.triggerEvent('onLogin', _userInfo)
     }

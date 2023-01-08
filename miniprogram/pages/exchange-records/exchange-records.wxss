@@ -5,6 +5,8 @@ page {
 
 .exchange-records-container {
   margin: 0 auto;
+  padding-bottom: 32rpx;
+  box-sizing: border-box;
   width: 654rpx;
   border-radius: 16rpx;
   background: #fff;
@@ -18,6 +20,14 @@ page {
 .exchange-records-container .block-item {
   padding: 32rpx 0;
   box-sizing: border-box;
+}
+
+.exchange-records-container .no-record {
+  padding-bottom: 32rpx;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 24rpx;
+  color: #86909C;
 }
 
 .exchange-records-container .remained-integral {
