@@ -43,13 +43,13 @@
 .integral-exchanged-card-container .top-container .code-box {
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   position: absolute;
   top: 50%;
   left: 50%;
   margin-top: -32rpx;
   margin-left: -210rpx;
-  padding: 12rpx 32rpx;
+  padding: 12rpx 20rpx;
   box-sizing: border-box;
   width: 430rpx;
   height: 64rpx;
@@ -58,7 +58,6 @@
 }
 
 .integral-exchanged-card-container .top-container .code-box .code-content {
-  margin-right: 18rpx;
   width: 340rpx;
   white-space: nowrap;
   overflow: hidden;

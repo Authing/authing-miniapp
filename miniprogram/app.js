@@ -1,11 +1,15 @@
 import { Authing } from '@authing/miniapp-wx'
 
 // ***** 上线前需要修改环境变量 *****
-const environment = 'test' // test / prod
+const environment = 'pre'
 
-const configAPIHost = environment === 'test'
-  ? 'https://core.mysql.authing-inc.co'
-  : 'https://core.authing.cn'
+const apiHostMap = {
+  test: 'https://core.mysql.authing-inc.co',
+  pre: 'https://core.pre.authing.cn',
+  prod: 'https://core.authing.cn'
+}
+
+const configAPIHost = apiHostMap[environment]
 
 const systemInfo = wx.getSystemInfoSync()
 const isIpx = systemInfo.model.indexOf('iPhone X') > -1

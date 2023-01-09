@@ -14,6 +14,24 @@ Page({
     this.getUserInfo()
   },
 
+  onHide () {
+    this.clearScanCodeLoginConfig()
+  },
+
+  onUnload () {
+    this.clearScanCodeLoginConfig()
+  },
+
+  /**
+   * 为避免影响个人中心 onLoad 中对 scene 的判断逻辑
+   * 授权登录成功后清除掉已过期/无效的 scene
+   */
+  clearScanCodeLoginConfig () {
+    app.resetScanCodeLoginConfig({
+      scene: ''
+    })
+  },
+
   async getUserInfo () {
     const [error, userInfo] = await app.authing.getUserInfo()
 
