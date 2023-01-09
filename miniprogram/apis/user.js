@@ -38,19 +38,12 @@ export async function updatePhone (options) {
 export async function getCryptedPhone (options = {}) {
   const { extIdpConnIdentifier, code } = options
 
-  const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
-
-  if (loginStateError) {
-    return Promise.resolve([loginStateError, undefined])
-  }
-
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v3/get-wechat-miniprogram-phone-data',
       method: 'POST',
       header: {
-        'x-authing-app-id': app.globalData.miniappConfig.appId,
-        Authorization: loginStateInfo.access_token
+        'x-authing-app-id': app.globalData.miniappConfig.appId
       },
       data: {
         extIdpConnidentifier: extIdpConnIdentifier,
@@ -88,7 +81,7 @@ export async function logout () {
     }
   })
 
-  return new Promise(() => {
+  return new Promise((resolve) => {
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v3/wechat-miniprogram/logout',
       method: 'POST',
@@ -109,6 +102,36 @@ export async function logout () {
       },
       complete: () => {
         app.authing.clearLoginState()
+      }
+    })
+  })
+}
+
+export async function checkExistsUser () {
+  const loginCode = await app.authing.getLoginCode()
+
+  return new Promise((resolve) => {
+    wx.request({
+      url: app.globalData.miniappConfig.host + '/api/v3/wechat-miniprogram/checkExistsUser',
+      method: 'POST',
+      header: {
+        'x-authing-app-id': app.globalData.miniappConfig.appId
+      },
+      data: {
+        code: loginCode,
+        encryptedData: '',
+        iv: '',
+        extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier
+      },
+      success: res => {
+        if (res.data.statusCode === 200) {
+          resolve([undefined, res.data.data])
+        } else {
+          resolve([res.data, undefined])
+        }
+      },
+      fail: res => {
+        resolve([res, undefined])
       }
     })
   })

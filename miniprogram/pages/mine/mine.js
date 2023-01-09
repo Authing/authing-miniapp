@@ -1,18 +1,19 @@
 import { formatUserInfo } from '../../utils/utils'
 
-import { changeQrcodeStatus, checkin, logout } from '../../apis/index'
+import { checkin, logout, checkExistsUser } from '../../apis/index'
 
 const app = getApp()
 
 Page({
   data: {
     userInfo: null,
-    isShowLoginModal: false,
     isShowTabbar: false
   },
 
   async onLoad() {
     wx.hideHomeButton()
+
+    wx.showLoading()
 
     const { scene } = app.globalData.scanCodeLoginConfig
 
@@ -20,43 +21,35 @@ Page({
       qrcodeId: scene
     })
 
-    const [loginStateError] = await app.authing.getLoginState()
+    this.setData({
+      isShowTabbar: app.globalData.miniappConfig.showPointsFunc
+    })
 
     // 通过扫码登录方式直接进入当前页面
     if (scene) {
-      this.setData({
-        isShowTabbar: app.globalData.miniappConfig.showPointsFunc
-      })
-
-      // 未登录，展示弹窗引导用户去登录
-      if (loginStateError) {
-        this.setData({
-          isShowLoginModal: true
-        })
-      } else {
-        // 已登录
-        await this.getUserInfo()
-        this.authenticatePhoneAndChangeQrcodeStatus()
-      }
-    } else {
-      this.setData({
-        isShowTabbar: app.globalData.miniappConfig.showPointsFunc
-      })
-
-      if (loginStateError) {
-        return
-      }
-
-      const [userInfoError, userInfo] = await app.authing.getUserInfo()
-    
-      if (userInfoError) {
-        return
-      }
-      
-      this.setData({
-        userInfo: formatUserInfo(userInfo)
-      })
+      return this.authenticatePhoneAndChangeQrcodeStatus()
     }
+
+    // 直接打开小程序进入当前页面
+    const [loginStateError] = await app.authing.getLoginState()
+    if (loginStateError) {
+      return wx.hideLoading()
+    }
+
+    const [userInfoError, userInfo] = await app.authing.getUserInfo()
+    if (userInfoError) {
+      return wx.hideLoading()
+    }
+    
+    this.setData({
+      userInfo: formatUserInfo(userInfo)
+    })
+
+    wx.hideLoading()
+  },
+
+  onHide () {
+    wx.hideLoading()
   },
 
   onShow () {
@@ -66,10 +59,8 @@ Page({
   async onLogin (e) {
     this.setData({
       userInfo: e.detail,
-      isShowLoginModal: false
     })
     checkin()
-    this.authenticatePhoneAndChangeQrcodeStatus()
   },
 
   async authenticatePhoneAndChangeQrcodeStatus () {
@@ -78,43 +69,21 @@ Page({
       return
     }
 
-    // 先修改一次二维码状态，确认已扫码
-    const [scanError] = await changeQrcodeStatus({
-      qrcodeId: app.globalData.scanCodeLoginConfig.scene,
-      action: 'SCAN'
+    this.setData({
+      isShowTabbar: app.globalData.miniappConfig.showPointsFunc
     })
 
-    if (scanError) {
+    const [checkExistUserError, checkExistUserInfo] = await checkExistsUser()
+    if (checkExistUserError) {
       return wx.showToast({
-        title: scanError.message || '二维码状态更新失败，请重新扫码',
+        title: checkExistUserError.message,
         icon: 'none'
       })
     }
 
-    // 未绑定手机号
-    if (!this.data.userInfo.phone) {
-      return wx.navigateTo({
-        url: '/pages/authenticate-phone/authenticate-phone',
-      })
-    }
-
-    // 如果已绑定手机号：
-    // 1. 修改二维码状态
-    // 2. 跳转到登录成功页面
-    const [confirmError] = await changeQrcodeStatus({
-      qrcodeId: app.globalData.scanCodeLoginConfig.scene,
-      action: 'CONFIRM'
-    })
-
-    if (confirmError) {
-      return wx.showToast({
-        title: confirmError.message || '二维码状态更新失败，请重新扫码',
-        icon: 'none'
-      })
-    }
-
+    const { hasBindUser, hasBindPhone } = checkExistUserInfo
     wx.navigateTo({
-      url: '/pages/scan-qrcode-login-success/scan-qrcode-login-success',
+      url: `/pages/authenticate-phone/authenticate-phone?hasBindUser=${+hasBindUser}&hasBindPhone=${+hasBindPhone}`,
     })
   },
 

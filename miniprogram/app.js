@@ -1,9 +1,10 @@
 import { Authing } from '@authing/miniapp-wx'
 
 // ***** 上线前需要修改环境变量 *****
-const environment = 'test'
+const environment = 'pre'
 
 const apiHostMap = {
+  why: 'https://core.authing.me',
   test: 'https://core.mysql.authing-inc.co',
   pre: 'https://core.pre.authing.cn',
   prod: 'https://core.authing.cn'

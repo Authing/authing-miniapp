@@ -7,13 +7,17 @@ const app = getApp()
 Page({
   data: {
     userInfo: null,
-    appName: ''
+    appName: '',
+    pageOptions: {}
   },
 
-  async onLoad() {
+  async onLoad(options = {}) {
     await app.getAuthing()
-    this.getUserInfo()
     this.setData({
+      pageOptions: {
+        hasBindUser: !!(options.hasBindUser - 0),
+        hasBindPhone: !!(options.hasBindPhone - 0)
+      },
       appName: app.globalData.miniappConfig.appName
     })
   },
@@ -36,85 +40,64 @@ Page({
     })
   },
 
-  async getUserInfo () {
-    const [error, userInfo] = await app.authing.getUserInfo()
-
-    if (!error) {
-      this.setData({
-        userInfo
-      })
-    }
-  },
-
   async authenticatePhoneAndInvokeLogin (e) {
     const { code } = e.detail
 
-    // 用户未授权手机号，不能阻断登录流程，直接修改二维码状态
-    if (!code) {
-      return this.invokeRemainLoginSteps()
-    }
-
-    const [phoneInfoError, phoneInfo] = await getCryptedPhone({
-      extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
-      code
-    })
-
-    // 1. 即使手机号已被另一个账号绑定
-    // 2. 或因其他原因导致手机号解密失败
-    // 3. 等等......
-    // 也不能阻断正常登录流程
-    if (phoneInfoError) {
-      wx.showToast({
-        title: phoneInfoError.message,
-        icon: 'none'
-      })
-
-      await delay()
-
-      return this.invokeRemainLoginSteps()
-    }
-
-    // 走接口绑定手机号
-    const [updatePhoneError] = await updatePhone({
-      phoneCountryCode: phoneInfo.phone_info.countryCode,
-      phone: phoneInfo.phone_info.purePhoneNumber,
-      codeForUpdatePhone: phoneInfo.codeForUpdatePhone
-    })
-
-    // 即使手机号更新失败，也不能阻断用户登录流程
-    if (updatePhoneError) {
-      wx.showToast({
-        title: updatePhoneError.message || '手机号更新失败，请在控制台个人信息中修改手机号',
-        icon: 'none'
+    // 新用户
+    if (!this.data.pageOptions.hasBindUser) {
+      return this.invokeHasNotBindUserLogic({
+        phoneCode: code
       })
     }
 
-    await delay()
-
-    return this.invokeRemainLoginSteps()
+    // 老用户
+    this.invokeHasBindUserLogic({
+      phoneCode: code
+    })
   },
 
-  async invokeRemainLoginSteps () {
-    const status = await this.confirmQrcodeStatus()
-    
-    // 二维码状态修改失败
-    if (!status) {
-      return wx.showToast({
-        title: changeQrcodeStatusError.message,
-        icon: 'none'
-      })
+  async changeQrcodeStatusAndToLoginSuccessPage () {
+    const scanStatus = await this.changeQrcodeStatusToScan()
+    if (!scanStatus) {
+      return
+    }
+
+    const confirmStatus = await this.changeQrcodeStatusToConfirm()
+    if (!confirmStatus) {
+      return
     }
 
     this.toLoginSuccessPage()
   },
 
-  async confirmQrcodeStatus () {
+  async changeQrcodeStatusToScan () {
+    const [changeQrcodeStatusError] = await changeQrcodeStatus({
+      qrcodeId: app.globalData.scanCodeLoginConfig.scene,
+      action: 'SCAN'
+    })
+
+    if (changeQrcodeStatusError) {
+      wx.showToast({
+        title: changeQrcodeStatusError.message,
+        icon: 'none'
+      })
+      return false
+    }
+
+    return true
+  },
+
+  async changeQrcodeStatusToConfirm () {
     const [changeQrcodeStatusError] = await changeQrcodeStatus({
       qrcodeId: app.globalData.scanCodeLoginConfig.scene,
       action: 'CONFIRM'
     })
 
     if (changeQrcodeStatusError) {
+      wx.showToast({
+        title: changeQrcodeStatusError.message,
+        icon: 'none'
+      })
       return false
     }
 
@@ -134,5 +117,124 @@ Page({
     })
 
     wx.navigateBack()
+  },
+
+  async loginByCodeAndPhone (options = {}) {
+    const { phoneCode } = options
+
+    this.invokeRemainLoginCodeAndPhoneSteps({
+      phoneCode
+    })
+  },
+
+  async invokeHasNotBindUserLogic (options = {}) {
+    const { phoneCode } = options
+  
+    if (phoneCode) {
+      return this.loginByCodeAndPhone({
+        phoneCode
+      })
+    }
+
+    this.invokeRemainLoginCodeSteps()
+  },
+
+  async invokeHasBindUserLogic (options = {}) {
+    const { phoneCode } = options
+
+    // 即使用户拒绝授权手机号，也不能阻断登录
+    if (!phoneCode) {  
+      return this.invokeRemainLoginCodeSteps()
+    }
+
+    // 已绑定手机号
+    if (this.data.pageOptions.hasBindPhone) {  
+      return this.invokeRemainLoginCodeSteps()
+    }
+
+    // 未绑定手机号
+    const [phoneInfoError, phoneInfo] = await getCryptedPhone({
+      extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
+      code: phoneCode
+    })
+
+    // 1. 即使手机号已被另一个账号绑定
+    // 2. 或因其他原因导致手机号解密失败
+    // 3. 等等......
+    // 也不能阻断正常登录流程
+    if (phoneInfoError) {
+      wx.showToast({
+        title: phoneInfoError.message,
+        icon: 'none'
+      })
+
+      await delay()
+
+      return this.invokeRemainLoginCodeSteps()
+    }
+
+    // 走接口绑定手机号
+    const [updatePhoneError] = await updatePhone({
+      phoneCountryCode: phoneInfo.phone_info.countryCode,
+      phone: phoneInfo.phone_info.purePhoneNumber,
+      codeForUpdatePhone: phoneInfo.codeForUpdatePhone
+    })
+
+    // 即使手机号更新失败，也不能阻断用户登录流程
+    if (updatePhoneError) {
+      wx.showToast({
+        title: updatePhoneError.message || '手机号更新失败，请在控制台个人信息中修改手机号',
+        icon: 'none'
+      })
+    }
+
+    return this.invokeRemainLoginCodeSteps()
+  },
+
+  async invokeRemainLoginCodeSteps () {
+    const [loginByCodeError] = await app.authing.loginByCode({
+      extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
+      wechatMiniProgramCodePayload: {
+        encryptedData: '',
+        iv: ''
+      },
+      options: {
+        scope: 'openid profile offline_access'
+      }
+    })
+
+    if (loginByCodeError) {
+      return wx.showToast({
+        title: loginByCodeError.message,
+        icon: 'none'
+      })
+    }
+
+    this.changeQrcodeStatusAndToLoginSuccessPage()
+  },
+
+  async invokeRemainLoginCodeAndPhoneSteps (options) {
+    const { phoneCode } = options
+
+    const [loginByCodeAndPhoneError] = await app.authing.loginByCodeAndPhone({
+      extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
+      wechatMiniProgramCodeAndPhonePayload: {
+        wxPhoneInfo: {
+          code: phoneCode
+        }
+      },
+      options: {
+        scope: 'openid profile offline_access'
+      }
+    })
+
+    if (loginByCodeAndPhoneError) {
+      return wx.showToast({
+        title: loginByCodeAndPhoneError.message,
+        icon: 'none'
+      })
+    }
+
+    this.changeQrcodeStatusAndToLoginSuccessPage()
   }
 })
