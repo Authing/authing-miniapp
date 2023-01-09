@@ -1,6 +1,6 @@
 import { formatUserInfo } from '../../utils/utils'
 
-import { changeQrcodeStatus, checkin } from '../../apis/index'
+import { changeQrcodeStatus, checkin, logout } from '../../apis/index'
 
 const app = getApp()
 
@@ -155,7 +155,7 @@ Page({
           return
         }
 
-        await app.authing.logout()
+        await logout()
 
         this.setData({
           userInfo: null

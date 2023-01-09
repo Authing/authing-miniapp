@@ -6,12 +6,16 @@ const app = getApp()
 
 Page({
   data: {
-    userInfo: null
+    userInfo: null,
+    appName: ''
   },
 
   async onLoad() {
     await app.getAuthing()
     this.getUserInfo()
+    this.setData({
+      appName: app.globalData.miniappConfig.appName
+    })
   },
 
   onHide () {
@@ -45,16 +49,29 @@ Page({
   async authenticatePhoneAndInvokeLogin (e) {
     const { code } = e.detail
 
+    // 用户未授权手机号，不能阻断登录流程，直接修改二维码状态
+    if (!code) {
+      return this.invokeRemainLoginSteps()
+    }
+
     const [phoneInfoError, phoneInfo] = await getCryptedPhone({
       extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
       code
     })
-    
+
+    // 1. 即使手机号已被另一个账号绑定
+    // 2. 或因其他原因导致手机号解密失败
+    // 3. 等等......
+    // 也不能阻断正常登录流程
     if (phoneInfoError) {
-      return wx.showToast({
-        title: phoneInfoError.message || '手机号解析失败，请重新操作',
+      wx.showToast({
+        title: phoneInfoError.message,
         icon: 'none'
       })
+
+      await delay()
+
+      return this.invokeRemainLoginSteps()
     }
 
     // 走接口绑定手机号
@@ -70,21 +87,44 @@ Page({
         title: updatePhoneError.message || '手机号更新失败，请在控制台个人信息中修改手机号',
         icon: 'none'
       })
-
-      await delay()
     }
 
-    // 修改二维码状态
+    await delay()
+
+    return this.invokeRemainLoginSteps()
+  },
+
+  async invokeRemainLoginSteps () {
+    const status = await this.confirmQrcodeStatus()
+    
+    // 二维码状态修改失败
+    if (!status) {
+      return wx.showToast({
+        title: changeQrcodeStatusError.message,
+        icon: 'none'
+      })
+    }
+
+    this.toLoginSuccessPage()
+  },
+
+  async confirmQrcodeStatus () {
     const [changeQrcodeStatusError] = await changeQrcodeStatus({
       qrcodeId: app.globalData.scanCodeLoginConfig.scene,
       action: 'CONFIRM'
     })
 
-    if (!changeQrcodeStatusError) {
-      wx.redirectTo({
-        url: '/pages/scan-qrcode-login-success/scan-qrcode-login-success',
-      })
+    if (changeQrcodeStatusError) {
+      return false
     }
+
+    return true
+  },
+
+  toLoginSuccessPage () {
+    wx.redirectTo({
+      url: '/pages/scan-qrcode-login-success/scan-qrcode-login-success',
+    })
   },
 
   async cancelLogin () {

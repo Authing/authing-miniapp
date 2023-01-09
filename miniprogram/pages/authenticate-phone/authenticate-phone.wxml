@@ -4,7 +4,7 @@
     class="authentication-icon">
   </image>
   
-  <view class="title">Authing 令牌</view>
+  <view class="title">{{ appName }}</view>
   
   <view class="user">
     <image src="{{ userInfo.photo }}" class="photo"></image>

@@ -11,7 +11,7 @@
     <image src="{{ _userInfo.photo }}" class="image"></image>
     <view class="overview has-login">
       <view class="username">{{ _userInfo.name || _userInfo.username || _userInfo.nickname }}</view>
-      <view class="tips">ID：{{ _userInfo.userId }}</view>
+      <view class="tips" bindtap="copyUserId">ID：{{ _userInfo.userId }}</view>
     </view>
   </view>
 </view>

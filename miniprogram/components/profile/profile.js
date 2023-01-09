@@ -91,6 +91,12 @@ Component({
 
     checkin () {
       checkin()
+    },
+
+    copyUserId () {
+      wx.setClipboardData({
+        data: this.data._userInfo.userId
+      })
     }
   }
 })
