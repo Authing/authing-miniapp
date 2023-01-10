@@ -1,9 +1,9 @@
-const app = getApp()
-
 /**
  * 积分列表
  */
 export async function getIntegralList () {
+  const app = getApp()
+
   return new Promise((resolve) => {
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v2/points-vouchers/list',
@@ -29,6 +29,7 @@ export async function getIntegralList () {
  * 获取用户积分
  */
 export async function getUserIntegrals () {
+  const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
   if (loginStateError) {
@@ -61,6 +62,7 @@ export async function getUserIntegrals () {
  * 签到
  */
 export async function checkin () {
+  const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
   if (loginStateError) {
@@ -93,6 +95,7 @@ export async function checkin () {
  * 兑换积分
  */
 export async function exchangeIntegral (options) {
+  const app = getApp()
   const { vouchersCode } = options
 
   if (!vouchersCode) {
@@ -136,6 +139,7 @@ export async function exchangeIntegral (options) {
  * 用户积分兑换记录
  */
 export async function getExchangedRecordList (options) {
+  const app = getApp()
   const { pageNo = 1, pageSize = 10 } = options
 
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()

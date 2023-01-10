@@ -6,10 +6,10 @@
   
   <view class="title">{{ appName }}</view>
   
-  <view class="user">
+  <!-- <view class="user">
     <image src="{{ userInfo.photo }}" class="photo"></image>
     <view class="name">{{ userInfo.name || userInfo.username || userInfo.nickname}}</view>
-  </view>
+  </view> -->
 
   <view class="tips">
     <view class="title">请确认是本人操作</view>

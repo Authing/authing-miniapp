@@ -14,7 +14,7 @@ page {
 }
 
 .authenticate-phone-container .title {
-  margin-bottom: 2rpx;
+  margin-bottom: 40rpx;
   line-height: 52rpx;
   font-size: 32rpx;
   font-weight: 500;

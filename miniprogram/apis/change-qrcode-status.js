@@ -1,6 +1,5 @@
-const app = getApp()
-
 export async function changeQrcodeStatus (options) {
+  const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
   if (loginStateError) {
@@ -8,6 +7,8 @@ export async function changeQrcodeStatus (options) {
   }
 
   const { qrcodeId, action } = options
+
+  wx.showLoading()
 
   return new Promise((resolve) => {
     // https://api.authing.cn/openapi/v3/authentication/#tag/%E7%99%BB%E5%BD%95/%E6%89%AB%E7%A0%81%E7%99%BB%E5%BD%95/operation/SignInV3Controller_changeQRCodeStatus
@@ -31,6 +32,9 @@ export async function changeQrcodeStatus (options) {
       },
       fail: (res) => {
         resolve([res, undefined])
+      },
+      complete: () => {
+        wx.hideLoading()
       }
     })
   })

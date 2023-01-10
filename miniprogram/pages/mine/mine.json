@@ -2,7 +2,6 @@
   "navigationBarTitleText": "我",
   "usingComponents": {
     "profile": "../../components/profile/profile",
-    "tabbar": "../../components/tabbar/tabbar",
-    "login-modal": "../../components/login-modal/login-modal"
+    "tabbar": "../../components/tabbar/tabbar"
   }
 }

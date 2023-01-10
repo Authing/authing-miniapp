@@ -60,7 +60,5 @@
     <view class="user-info-block logout" bindtap="logout">退出登录</view>
   </block>
 
-  <login-modal isShow="{{ isShowLoginModal }}" bindonLogin="onLogin"></login-modal>
-
   <tabbar active="mine" wx:if="{{ isShowTabbar }}"></tabbar>
 </view>
