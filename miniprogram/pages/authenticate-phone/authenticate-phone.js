@@ -1,7 +1,5 @@
 import { changeQrcodeStatus, updatePhone, getCryptedPhone } from '../../apis/index'
 
-import { delay } from '../../utils/utils'
-
 const app = getApp()
 
 Page({
@@ -120,21 +118,13 @@ Page({
     }
 
     // 登录成功后绑定手机号
-    const [bindPhoneError] = await this.bindPhone({
-      phoneCode
-    })
-
     // 1. 即使手机号已被另一个账号绑定
     // 2. 或因其他原因导致手机号解密失败
     // 3. 等等......
     // ***** 无论是否绑定成功，都不能阻断登录流程 *****
-    if (bindPhoneError) {
-      wx.showToast({
-        title: bindPhoneError.message,
-        icon: 'none'
-      })
-      await delay()
-    }
+    await this.bindPhone({
+      phoneCode
+    })
 
     // 修改二维码状态且跳转到授权成功页，扫码登录成功
     app.changeQrcodeStatusAndToLoginSuccessPage()

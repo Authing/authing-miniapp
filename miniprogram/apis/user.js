@@ -75,10 +75,14 @@ export async function logout () {
   }
 
   const data = {}
-  const validKeys = ['id_token', 'access_token', 'refresh_token']
+  const validKeys = [
+    ['id_token', 'idToken'],
+    ['access_token', 'accessToken'],
+    ['refresh_token', 'refreshToken']
+  ]
   validKeys.forEach(key => {
-    if (loginStateInfo[key]) {
-      data[key] = loginStateInfo[key]
+    if (loginStateInfo[key[0]]) {
+      data[key[1]] = loginStateInfo[key[0]]
     }
   })
 
