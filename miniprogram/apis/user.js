@@ -1,6 +1,5 @@
-const app = getApp()
-
 export async function updatePhone (options) {
+  const app = getApp()
   const { phoneCountryCode, phone, codeForUpdatePhone } = options
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
@@ -36,6 +35,7 @@ export async function updatePhone (options) {
 }
 
 export async function getCryptedPhone (options = {}) {
+  const app = getApp()
   const { extIdpConnIdentifier, code } = options
 
   return new Promise((resolve) => {
@@ -64,6 +64,7 @@ export async function getCryptedPhone (options = {}) {
 }
 
 export async function logout () {
+  const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
   // 1. 登录态过期
@@ -108,6 +109,7 @@ export async function logout () {
 }
 
 export async function checkExistsUser () {
+  const app = getApp()
   const loginCode = await app.authing.getLoginCode()
 
   return new Promise((resolve) => {

@@ -82,6 +82,13 @@ Page({
     }
 
     const { hasBindUser, hasBindPhone } = checkExistUserInfo
+
+    // 老用户 & 已绑定手机
+    if (hasBindUser && hasBindPhone) {
+      return app.invokeRemainLoginCodeSteps()
+    }
+
+    // 其他场景跳转到授权页
     wx.navigateTo({
       url: `/pages/authenticate-phone/authenticate-phone?hasBindUser=${+hasBindUser}&hasBindPhone=${+hasBindPhone}`,
     })

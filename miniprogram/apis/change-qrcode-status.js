@@ -1,6 +1,5 @@
-const app = getApp()
-
 export async function changeQrcodeStatus (options) {
+  const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
   if (loginStateError) {

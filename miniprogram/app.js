@@ -1,5 +1,7 @@
 import { Authing } from '@authing/miniapp-wx'
 
+import { changeQrcodeStatus } from './apis/index'
+
 // ***** 上线前需要修改环境变量 *****
 const environment = 'pre'
 
@@ -122,6 +124,95 @@ App({
     wx.showToast({
       title: error.message || '请重新登录',
       icon: 'none'
+    })
+  },
+
+  async loginByCode () {
+    return await this.authing.loginByCode({
+      extIdpConnidentifier: this.globalData.miniappConfig.extIdpConnIdentifier,
+      wechatMiniProgramCodePayload: {
+        encryptedData: '',
+        iv: ''
+      },
+      options: {
+        scope: 'openid profile offline_access'
+      }
+    })
+  },
+
+  async invokeRemainLoginCodeSteps () {
+    const [loginByCodeError] = await this.loginByCode()
+
+    if (loginByCodeError) {
+      return wx.showToast({
+        title: loginByCodeError.message,
+        icon: 'none'
+      })
+    }
+
+    this.changeQrcodeStatusAndToLoginSuccessPage()
+  },
+
+  async changeQrcodeStatusToScan () {
+    const [changeQrcodeStatusError] = await changeQrcodeStatus({
+      qrcodeId: this.globalData.scanCodeLoginConfig.scene,
+      action: 'SCAN'
+    })
+
+    if (changeQrcodeStatusError) {
+      wx.showToast({
+        title: changeQrcodeStatusError.message,
+        icon: 'none'
+      })
+      return false
+    }
+
+    return true
+  },
+
+  async changeQrcodeStatusAndToLoginSuccessPage () {
+    const scanStatus = await this.changeQrcodeStatusToScan()
+    if (!scanStatus) {
+      return
+    }
+
+    const confirmStatus = await this.changeQrcodeStatusToConfirm()
+    if (!confirmStatus) {
+      return
+    }
+
+    this.toLoginSuccessPage()
+  },
+
+  async changeQrcodeStatusToConfirm () {
+    const [changeQrcodeStatusError] = await changeQrcodeStatus({
+      qrcodeId: this.globalData.scanCodeLoginConfig.scene,
+      action: 'CONFIRM'
+    })
+
+    if (changeQrcodeStatusError) {
+      wx.showToast({
+        title: changeQrcodeStatusError.message,
+        icon: 'none'
+      })
+      return false
+    }
+
+    return true
+  },
+
+  toLoginSuccessPage () {
+    const pageStack = getCurrentPages()
+    const url = '/pages/scan-qrcode-login-success/scan-qrcode-login-success'
+    
+    if (pageStack.length > 1) {
+      return wx.redirectTo({
+        url
+      })
+    }
+
+    wx.navigateTo({
+      url
     })
   }
 })

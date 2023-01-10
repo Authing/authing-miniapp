@@ -56,60 +56,6 @@ Page({
     })
   },
 
-  async changeQrcodeStatusAndToLoginSuccessPage () {
-    const scanStatus = await this.changeQrcodeStatusToScan()
-    if (!scanStatus) {
-      return
-    }
-
-    const confirmStatus = await this.changeQrcodeStatusToConfirm()
-    if (!confirmStatus) {
-      return
-    }
-
-    this.toLoginSuccessPage()
-  },
-
-  async changeQrcodeStatusToScan () {
-    const [changeQrcodeStatusError] = await changeQrcodeStatus({
-      qrcodeId: app.globalData.scanCodeLoginConfig.scene,
-      action: 'SCAN'
-    })
-
-    if (changeQrcodeStatusError) {
-      wx.showToast({
-        title: changeQrcodeStatusError.message,
-        icon: 'none'
-      })
-      return false
-    }
-
-    return true
-  },
-
-  async changeQrcodeStatusToConfirm () {
-    const [changeQrcodeStatusError] = await changeQrcodeStatus({
-      qrcodeId: app.globalData.scanCodeLoginConfig.scene,
-      action: 'CONFIRM'
-    })
-
-    if (changeQrcodeStatusError) {
-      wx.showToast({
-        title: changeQrcodeStatusError.message,
-        icon: 'none'
-      })
-      return false
-    }
-
-    return true
-  },
-
-  toLoginSuccessPage () {
-    wx.redirectTo({
-      url: '/pages/scan-qrcode-login-success/scan-qrcode-login-success',
-    })
-  },
-
   async cancelLogin () {
     await changeQrcodeStatus({
       qrcodeId: app.globalData.scanCodeLoginConfig.scene,
@@ -127,6 +73,10 @@ Page({
     })
   },
 
+  /**
+   * 新用户
+   * @param { phoneCode } options 
+   */
   async invokeHasNotBindUserLogic (options = {}) {
     const { phoneCode } = options
   
@@ -136,41 +86,76 @@ Page({
       })
     }
 
-    this.invokeRemainLoginCodeSteps()
+    app.invokeRemainLoginCodeSteps()
   },
 
+  /**
+   * 老用户
+   * @param { phoneCode } options 
+   */
   async invokeHasBindUserLogic (options = {}) {
     const { phoneCode } = options
 
+    // 老用户未绑定手机号
     // 即使用户拒绝授权手机号，也不能阻断登录
     if (!phoneCode) {  
-      return this.invokeRemainLoginCodeSteps()
+      return app.invokeRemainLoginCodeSteps()
     }
 
-    // 已绑定手机号
+    // 老用户已绑定手机号
+    // 这里只是兜底，在 mine 页面已执行『老用户已绑定手机号』的逻辑
     if (this.data.pageOptions.hasBindPhone) {  
-      return this.invokeRemainLoginCodeSteps()
+      return app.invokeRemainLoginCodeSteps()
     }
 
-    // 未绑定手机号
-    const [phoneInfoError, phoneInfo] = await getCryptedPhone({
-      extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
-      code: phoneCode
+    // 老用户未绑定手机号且未拒绝授权
+    // 先登录
+    const [loginByCodeError] = await app.loginByCode()
+
+    if (loginByCodeError) {
+      return wx.showToast({
+        title: loginByCodeError.message,
+        icon: 'none'
+      })
+    }
+
+    // 登录成功后绑定手机号
+    const [bindPhoneError] = await this.bindPhone({
+      phoneCode
     })
 
     // 1. 即使手机号已被另一个账号绑定
     // 2. 或因其他原因导致手机号解密失败
     // 3. 等等......
-    // 也不能阻断正常登录流程
-    if (phoneInfoError) {
+    // ***** 无论是否绑定成功，都不能阻断登录流程 *****
+    if (bindPhoneError) {
       wx.showToast({
-        title: phoneInfoError.message,
+        title: bindPhoneError.message,
         icon: 'none'
       })
-
       await delay()
+    }
 
-      return this.invokeRemainLoginCodeSteps()
+    // 修改二维码状态且跳转到授权成功页，扫码登录成功
+    app.changeQrcodeStatusAndToLoginSuccessPage()
+  },
+
+  /**
+   * 绑定手机号
+   * 1. 获取解密后的手机号
+   * 2. 更新用户手机号
+   * @param { phoneCode } options 
+   */
+  async bindPhone (options = {}) {
+    const { phoneCode } = options
+
+    const [phoneInfoError, phoneInfo] = await getCryptedPhone({
+      extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
+      code: phoneCode
+    })
+
+    if (phoneInfoError) {
+      return [phoneInfoError, undefined]
     }
 
     // 走接口绑定手机号
@@ -182,35 +167,10 @@ Page({
 
     // 即使手机号更新失败，也不能阻断用户登录流程
     if (updatePhoneError) {
-      wx.showToast({
-        title: updatePhoneError.message || '手机号更新失败，请在控制台个人信息中修改手机号',
-        icon: 'none'
-      })
+      return [updatePhoneError, undefined]
     }
 
-    return this.invokeRemainLoginCodeSteps()
-  },
-
-  async invokeRemainLoginCodeSteps () {
-    const [loginByCodeError] = await app.authing.loginByCode({
-      extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
-      wechatMiniProgramCodePayload: {
-        encryptedData: '',
-        iv: ''
-      },
-      options: {
-        scope: 'openid profile offline_access'
-      }
-    })
-
-    if (loginByCodeError) {
-      return wx.showToast({
-        title: loginByCodeError.message,
-        icon: 'none'
-      })
-    }
-
-    this.changeQrcodeStatusAndToLoginSuccessPage()
+    return [undefined, true]
   },
 
   async invokeRemainLoginCodeAndPhoneSteps (options) {
@@ -235,6 +195,6 @@ Page({
       })
     }
 
-    this.changeQrcodeStatusAndToLoginSuccessPage()
+    app.changeQrcodeStatusAndToLoginSuccessPage()
   }
 })
