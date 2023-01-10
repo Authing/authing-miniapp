@@ -3,7 +3,7 @@ import { Authing } from '@authing/miniapp-wx'
 import { changeQrcodeStatus } from './apis/index'
 
 // ***** 上线前需要修改环境变量 *****
-const environment = 'pre'
+const environment = 'prod'
 
 const apiHostMap = {
   why: 'https://core.authing.me',
