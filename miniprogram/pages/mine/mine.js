@@ -22,7 +22,7 @@ Page({
     })
 
     this.setData({
-      isShowTabbar: app.globalData.miniappConfig.showPointsFunc
+      isShowTabbar: !scene
     })
 
     // 通过扫码登录方式直接进入当前页面
@@ -68,10 +68,6 @@ Page({
     if (!app.globalData.scanCodeLoginConfig.scene) {
       return
     }
-
-    this.setData({
-      isShowTabbar: app.globalData.miniappConfig.showPointsFunc
-    })
 
     const [checkExistUserError, checkExistUserInfo] = await checkExistsUser()
     if (checkExistUserError) {
