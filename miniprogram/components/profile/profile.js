@@ -34,6 +34,13 @@ Component({
 
   methods: {
     async toLogin () {
+      if (!app.authing) {
+        return wx.showToast({
+          title: 'SDK 初始化失败，请检查应用配置',
+          icon: 'none'
+        })
+      }
+
       wx.showLoading()
 
       // let encryptedData = ''
