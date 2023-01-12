@@ -171,16 +171,19 @@ App({
   },
 
   async changeQrcodeStatusAndToLoginSuccessPage () {
+    wx.showLoading()
+
     const scanStatus = await this.changeQrcodeStatusToScan()
     if (!scanStatus) {
-      return
+      return wx.hideLoading()
     }
 
     const confirmStatus = await this.changeQrcodeStatusToConfirm()
     if (!confirmStatus) {
-      return
+      return wx.hideLoading()
     }
 
+    wx.hideLoading()
     this.toLoginSuccessPage()
   },
 
