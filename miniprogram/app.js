@@ -179,7 +179,7 @@ App({
     }
 
     userInfo.openid = grantWxappInfo.openid
-    userInfo.unionid = grantWxapp.unionid
+    userInfo.unionid = grantWxappInfo.unionid
 
     const [authWxappError] = await authWxapp({
       userInfo

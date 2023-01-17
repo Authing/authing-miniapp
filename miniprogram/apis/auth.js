@@ -22,8 +22,8 @@ export async function grantWxapp () {
 }
 
 export async function authWxapp (options) {
-  const { userInfo } = options
   const app = getApp()
+  const { userInfo } = options
   const { scene } = app.globalData.scanCodeLoginConfig
 
   return new Promise((resolve) => {
