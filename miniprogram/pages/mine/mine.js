@@ -1,6 +1,6 @@
 import { formatUserInfo } from '../../utils/utils'
 
-import { checkin, logout, checkExistsUser } from '../../apis/index'
+import { checkin, logout, checkExistsUser, grantWxapp } from '../../apis/index'
 
 const app = getApp()
 
