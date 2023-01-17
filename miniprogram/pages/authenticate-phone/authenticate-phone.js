@@ -121,7 +121,7 @@ Page({
       phoneCode
     })
 
-    const [userInfoError, userInfo] = app.authing.getUserInfo()
+    const [userInfoError, userInfo] = await app.authing.getUserInfo()
 
     if (userInfoError) {
       return wx.showToast({
