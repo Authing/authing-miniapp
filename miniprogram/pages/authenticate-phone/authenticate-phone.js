@@ -1,4 +1,4 @@
-import { changeQrcodeStatus, updatePhone, getCryptedPhone } from '../../apis/index'
+import { updatePhone, getCryptedPhone } from '../../apis/index'
 
 const app = getApp()
 
@@ -55,11 +55,6 @@ Page({
   },
 
   async cancelLogin () {
-    await changeQrcodeStatus({
-      qrcodeId: app.globalData.scanCodeLoginConfig.scene,
-      action: 'CANCEL'
-    })
-
     wx.navigateBack()
   },
 
@@ -126,8 +121,19 @@ Page({
       phoneCode
     })
 
+    const [userInfoError, userInfo] = await app.authing.getUserInfo()
+
+    if (userInfoError) {
+      return wx.showToast({
+        title: userInfoError.message || '用户信息获取失败，请重新扫码',
+        icon: 'none'
+      })
+    }
+
     // 修改二维码状态且跳转到授权成功页，扫码登录成功
-    app.changeQrcodeStatusAndToLoginSuccessPage()
+    app.changeQrcodeStatusAndToLoginSuccessPage({
+      userInfo
+    })
   },
 
   /**
@@ -185,6 +191,17 @@ Page({
       })
     }
 
-    app.changeQrcodeStatusAndToLoginSuccessPage()
+    const [userInfoError, userInfo] = await app.authing.getUserInfo()
+
+    if (userInfoError) {
+      return wx.showToast({
+        title: userInfoError.message || '用户信息获取失败，请重新扫码',
+        icon: 'none'
+      })
+    }
+
+    app.changeQrcodeStatusAndToLoginSuccessPage({
+      userInfo
+    })
   }
 })

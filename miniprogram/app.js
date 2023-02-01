@@ -1,6 +1,6 @@
 import { Authing } from '@authing/miniapp-wx'
 
-import { changeQrcodeStatus } from './apis/index'
+import { grantWxapp, authWxapp } from './apis/index'
 
 // ***** 上线前需要修改环境变量 *****
 const environment = 'prod'
@@ -150,59 +150,86 @@ App({
       })
     }
 
-    this.changeQrcodeStatusAndToLoginSuccessPage()
-  },
+    const [userInfoError, userInfo] = await this.authing.getUserInfo()
 
-  async changeQrcodeStatusToScan () {
-    const [changeQrcodeStatusError] = await changeQrcodeStatus({
-      qrcodeId: this.globalData.scanCodeLoginConfig.scene,
-      action: 'SCAN'
-    })
-
-    if (changeQrcodeStatusError) {
-      wx.showToast({
-        title: changeQrcodeStatusError.message,
+    if (userInfoError) {
+      return wx.showToast({
+        title: userInfoError.message || '用户信息获取失败，请重新扫码',
         icon: 'none'
       })
-      return false
     }
 
-    return true
+    this.changeQrcodeStatusAndToLoginSuccessPage({
+      userInfo
+    })
   },
 
-  async changeQrcodeStatusAndToLoginSuccessPage () {
+  async changeQrcodeStatusAndToLoginSuccessPage (options) {
+    const { userInfo } = options
+
     wx.showLoading()
 
-    const scanStatus = await this.changeQrcodeStatusToScan()
-    if (!scanStatus) {
-      return wx.hideLoading()
+    const [grantWxappError, grantWxappInfo] = await grantWxapp()
+
+    if (grantWxappError) {
+      return wx.showToast({
+        title: grantWxappError.message,
+        icon: 'none'
+      })
     }
 
-    const confirmStatus = await this.changeQrcodeStatusToConfirm()
-    if (!confirmStatus) {
-      return wx.hideLoading()
+    userInfo.openid = grantWxappInfo.openid
+    userInfo.unionid = grantWxappInfo.unionid
+
+    const [authWxappError] = await authWxapp({
+      userInfo
+    })
+    
+    if (authWxappError) {
+      return wx.showToast({
+        title: authWxappError.message,
+        icon: 'none'
+      })
     }
 
     wx.hideLoading()
+
     this.toLoginSuccessPage()
   },
 
-  async changeQrcodeStatusToConfirm () {
-    const [changeQrcodeStatusError] = await changeQrcodeStatus({
-      qrcodeId: this.globalData.scanCodeLoginConfig.scene,
-      action: 'CONFIRM'
-    })
+  // async changeQrcodeStatusToScan () {
+  //   const [changeQrcodeStatusError] = await changeQrcodeStatus({
+  //     qrcodeId: this.globalData.scanCodeLoginConfig.scene,
+  //     action: 'SCAN'
+  //   })
 
-    if (changeQrcodeStatusError) {
-      wx.showToast({
-        title: changeQrcodeStatusError.message,
-        icon: 'none'
-      })
-      return false
-    }
+  //   if (changeQrcodeStatusError) {
+  //     wx.showToast({
+  //       title: changeQrcodeStatusError.message,
+  //       icon: 'none'
+  //     })
+  //     return false
+  //   }
 
-    return true
-  },
+  //   return true
+  // },
+
+  // async changeQrcodeStatusToConfirm () {
+  //   const [changeQrcodeStatusError] = await changeQrcodeStatus({
+  //     qrcodeId: this.globalData.scanCodeLoginConfig.scene,
+  //     action: 'CONFIRM'
+  //   })
+
+  //   if (changeQrcodeStatusError) {
+  //     wx.showToast({
+  //       title: changeQrcodeStatusError.message,
+  //       icon: 'none'
+  //     })
+  //     return false
+  //   }
+
+  //   return true
+  // },
 
   toLoginSuccessPage () {
     const pageStack = getCurrentPages()
