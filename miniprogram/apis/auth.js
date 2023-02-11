@@ -1,3 +1,11 @@
+/**
+ * 修改二维码状态，授权登录
+ * @returns [{
+ *  openid: string
+ *  unionid: string
+ *  sessionKey: string
+ * }, undefined]
+ */
 export async function grantWxapp () {
   const app = getApp()
   const code  = await app.authing.getLoginCode()
@@ -21,6 +29,10 @@ export async function grantWxapp () {
   })
 }
 
+/**
+ * 授权登录
+ * @param {userInfo} options 用户个人信息，包含从 grantWxapp 获取到的 openid 和 unionid 等
+ */
 export async function authWxapp (options) {
   const app = getApp()
   const { userInfo } = options
