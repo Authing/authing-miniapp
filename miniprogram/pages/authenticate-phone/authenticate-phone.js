@@ -58,10 +58,10 @@ Page({
     wx.navigateBack()
   },
 
-  async loginByCodeAndPhone (options = {}) {
+  async loginByPhone (options = {}) {
     const { phoneCode } = options
 
-    this.invokeRemainLoginCodeAndPhoneSteps({
+    this.invokeRemainLoginByPhoneSteps({
       phoneCode
     })
   },
@@ -74,7 +74,7 @@ Page({
     const { phoneCode } = options
   
     if (phoneCode) {
-      return this.loginByCodeAndPhone({
+      return this.loginByPhone({
         phoneCode
       })
     }
@@ -169,10 +169,10 @@ Page({
     return [undefined, true]
   },
 
-  async invokeRemainLoginCodeAndPhoneSteps (options) {
+  async invokeRemainLoginByPhoneSteps (options) {
     const { phoneCode } = options
-
-    const [loginByCodeAndPhoneError] = await app.authing.loginByCodeAndPhone({
+``
+    const [loginByCodeAndPhoneError] = await app.authing.loginByPhone({
       extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
       wechatMiniProgramCodeAndPhonePayload: {
         wxPhoneInfo: {
