@@ -36,7 +36,7 @@
         wx:for-index="index"
         wx:key="index">
         <view class="agreement-box">
-          <checkbox value="{{ item.id }}" class="checkbox" />
+          <checkbox value="{{ item.id }}" id="{{ item.id }}" class="checkbox" />
           <block wx:if="{{ item.agreements && item.agreements.length }}">
             <label class="agreement-tips" for="{{ item.id }}">我已阅读并同意 Authing </label>
             <view 

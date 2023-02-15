@@ -94,7 +94,7 @@ page {
 }
 
 .agreement-item {
-  padding: 0 32rpx;
+  padding: 0 44rpx;
   box-sizing: border-box;
   font-size: 28rpx;
   color: #86909C;
