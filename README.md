@@ -6,4 +6,3 @@
 
 ## Todo
 - Encapsulate API request
-- Use `Status Machine` for V3 API
