@@ -197,40 +197,6 @@ App({
     this.toLoginSuccessPage()
   },
 
-  // async changeQrcodeStatusToScan () {
-  //   const [changeQrcodeStatusError] = await changeQrcodeStatus({
-  //     qrcodeId: this.globalData.scanCodeLoginConfig.scene,
-  //     action: 'SCAN'
-  //   })
-
-  //   if (changeQrcodeStatusError) {
-  //     wx.showToast({
-  //       title: changeQrcodeStatusError.message,
-  //       icon: 'none'
-  //     })
-  //     return false
-  //   }
-
-  //   return true
-  // },
-
-  // async changeQrcodeStatusToConfirm () {
-  //   const [changeQrcodeStatusError] = await changeQrcodeStatus({
-  //     qrcodeId: this.globalData.scanCodeLoginConfig.scene,
-  //     action: 'CONFIRM'
-  //   })
-
-  //   if (changeQrcodeStatusError) {
-  //     wx.showToast({
-  //       title: changeQrcodeStatusError.message,
-  //       icon: 'none'
-  //     })
-  //     return false
-  //   }
-
-  //   return true
-  // },
-
   toLoginSuccessPage () {
     const pageStack = getCurrentPages()
     const url = '/pages/scan-qrcode-login-success/scan-qrcode-login-success'

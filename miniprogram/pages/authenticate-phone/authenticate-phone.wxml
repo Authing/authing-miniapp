@@ -26,8 +26,44 @@
       <view>使用你的手机账号</view>
     </view>
   </view>
+
+  <view class="agreements">
+    <checkbox-group bindchange="onChangeAgreements">
+      <view
+        class="agreement-item"
+        wx:for="{{ agreements }}"
+        wx:for-item="item"
+        wx:for-index="index"
+        wx:key="index">
+        <view class="agreement-box">
+          <checkbox value="{{ item.id }}" class="checkbox" />
+          <block wx:if="{{ item.agreements && item.agreements.length }}">
+            <label class="agreement-tips" for="{{ item.id }}">我已阅读并同意 Authing </label>
+            <view 
+              wx:for="{{ item.agreements }}"
+              wx:for-item="agreement"
+              wx:for-index="index"
+              wx:key="title"
+              class="agreement-title-box">
+              <view
+                class="agreement-title"
+                bindtap="openAgreement"
+                data-link="{{ agreement.link }}">
+                <text>{{ agreement.title }}</text>
+              </view>
+              <text wx:if="{{ index < item.agreements.length - 1 }}" class="connector">和</text>
+            </view>
+          </block>
+          <label wx:else class="agreement-tips" for="{{ item.id }}">{{ item.title }}</label>
+        </view>
+      </view>
+    </checkbox-group>
+  </view>
   
+  <button class="button login-button" wx:if="{{ !acceptedAgreements }}" bindtap="authenticatePhoneAndInvokeLogin">授权</button>
+
   <button 
+    wx:else
     class="button login-button" 
     open-type="getPhoneNumber" 
     bindgetphonenumber="authenticatePhoneAndInvokeLogin">授权
