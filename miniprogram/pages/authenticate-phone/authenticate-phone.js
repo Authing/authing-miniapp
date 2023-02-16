@@ -15,7 +15,6 @@ Page({
 
   async onLoad(options = {}) {
     await app.getAuthing()
-    await this.getAgreements()
     this.setData({
       pageOptions: {
         hasBindUser: !!(options.hasBindUser - 0),
@@ -23,6 +22,7 @@ Page({
       },
       appName: app.globalData.miniappConfig.appName
     })
+    this.getAgreements()
   },
 
   onHide () {
