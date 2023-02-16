@@ -25,10 +25,6 @@ Page({
     this.getAgreements()
   },
 
-  onHide () {
-    this.clearScanCodeLoginConfig()
-  },
-
   onUnload () {
     this.clearScanCodeLoginConfig()
   },
