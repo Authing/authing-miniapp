@@ -38,7 +38,7 @@ page {
 }
 
 .authenticate-phone-container .tips {
-  margin: 0 auto;
+  margin: 0 auto 100rpx auto;
   padding: 32rpx 32rpx;
   box-sizing: border-box;
   width: 654rpx;
@@ -87,4 +87,45 @@ page {
 .authenticate-phone-container .button.cancel-login-button {
   background-color: #F2F3F5;
   color: #1D2129;
+}
+
+.agreements {
+  margin-bottom: 20rpx;
+}
+
+.agreement-item {
+  padding: 0 44rpx;
+  box-sizing: border-box;
+  font-size: 28rpx;
+  color: #86909C;
+}
+
+.agreement-box {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.agreement-box .checkbox {
+  transform: scale(0.7, 0.7);
+}
+
+.agreement-box .agreement-title-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.agreement-box .agreement-title-box .agreement-title {
+  color: #215ae5;
+}
+
+.agreement-box .agreement-title-box .connector {
+  padding: 0 10rpx;
+  box-sizing: border-box;
+}
+
+.agreement-box .agreement-tips {
+  padding-right: 10rpx;
+  box-sizing: border-box;
 }

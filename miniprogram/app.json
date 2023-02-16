@@ -5,7 +5,8 @@
     "pages/exchange-records/exchange-records",
     "pages/mine/mine",
     "pages/authenticate-phone/authenticate-phone",
-    "pages/scan-qrcode-login-success/scan-qrcode-login-success"
+    "pages/scan-qrcode-login-success/scan-qrcode-login-success",
+    "pages/webview/webview"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -1,4 +1,6 @@
-import { updatePhone, getCryptedPhone } from '../../apis/index'
+import { updatePhone, getCryptedPhone, getPublicConfig } from '../../apis/index'
+
+import { extractAgreements } from '../../utils/utils'
 
 const app = getApp()
 
@@ -6,7 +8,9 @@ Page({
   data: {
     userInfo: null,
     appName: '',
-    pageOptions: {}
+    pageOptions: {},
+    agreements: [],
+    acceptedAgreements: false
   },
 
   async onLoad(options = {}) {
@@ -18,10 +22,7 @@ Page({
       },
       appName: app.globalData.miniappConfig.appName
     })
-  },
-
-  onHide () {
-    this.clearScanCodeLoginConfig()
+    this.getAgreements()
   },
 
   onUnload () {
@@ -38,7 +39,61 @@ Page({
     })
   },
 
+  async getAgreements () {
+    const [publicConfigError, publicConfig] = await getPublicConfig()
+    if (publicConfigError) {
+      return
+    }
+    const agreements = publicConfig.agreements
+      .filter(item => item.lang === 'zh-CN')
+      .map(item => {
+        const agreements = extractAgreements(item.title)
+
+        if (!agreements.length) {
+          return item
+        }
+
+        return {
+          id: item.id,
+          required: item.required,
+          agreements
+        }
+      })
+
+    this.setData({
+      agreements
+    })
+  },
+
+  openAgreement (e) {
+    const { link } = e.currentTarget.dataset
+    wx.navigateTo({
+      url: `/pages/webview/webview?url=${encodeURIComponent(link)}`,
+    })
+  },
+
+  onChangeAgreements (e) {
+    const value = e.detail.value.map(item => +item)
+
+    const requiredAgreements = this.data.agreements.filter(item => item.required)
+
+    const notAcceptRequiredAgreements = requiredAgreements.find(item => {
+      return value.indexOf(+item.id) === -1
+    })
+
+    this.setData({
+      acceptedAgreements: !notAcceptRequiredAgreements
+    })
+  },
+
   async authenticatePhoneAndInvokeLogin (e) {
+    if (!this.data.acceptedAgreements) {
+      return wx.showToast({
+        title: '请先阅读并同意协议',
+        icon: 'none'
+      })
+    }
+
     const { code } = e.detail
 
     // 新用户

@@ -32,3 +32,15 @@ export async function delay (time = 800) {
     }, time)
   })
 }
+
+export function extractAgreements (str) {
+  const reg = /<a[^>]*href=[ '"]([^"]*)[' "][^>]*>(.*?)<\/a>/gi
+  const res = []
+  while (reg.exec(str) !== null) {
+    res.push({
+      title: RegExp.$2,
+      link: RegExp.$1
+    })
+  }
+  return res
+}
