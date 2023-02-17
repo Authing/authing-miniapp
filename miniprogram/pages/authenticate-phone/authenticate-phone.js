@@ -230,7 +230,7 @@ Page({
 
   async invokeRemainLoginByPhoneSteps (options) {
     const { phoneCode } = options
-``
+
     const [loginByCodeAndPhoneError] = await app.authing.loginByPhone({
       extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
       wechatMiniProgramCodeAndPhonePayload: {
