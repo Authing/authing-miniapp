@@ -231,6 +231,10 @@ Page({
   async invokeRemainLoginByPhoneSteps (options) {
     const { phoneCode } = options
 
+    wx.showLoading({
+      title: '登录中...'
+    })
+
     const [loginByCodeAndPhoneError] = await app.authing.loginByPhone({
       extIdpConnidentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
       wechatMiniProgramCodeAndPhonePayload: {
@@ -242,6 +246,8 @@ Page({
         scope: 'openid profile offline_access'
       }
     })
+
+    wx.hideLoading()
 
     if (loginByCodeAndPhoneError) {
       return wx.showToast({
