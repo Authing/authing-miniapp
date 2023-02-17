@@ -41,9 +41,13 @@ Page({
 
   async getAgreements () {
     const [publicConfigError, publicConfig] = await getPublicConfig()
-    if (publicConfigError) {
+    if (publicConfigError || !publicConfig.agreements || !publicConfig.agreements.length) {
+      this.setData({
+        acceptedAgreements: true
+      })
       return
     }
+
     const agreements = publicConfig.agreements
       .filter(item => item.lang === 'zh-CN')
       .map(item => {
