@@ -1,16 +1,17 @@
 {
   "name": "authing-miniapp",
   "version": "1.0.0",
-  "description": "",
-  "main": ".eslintrc.js",
+  "description": "Authing Cloud",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "husky install",
+    "lint": "eslint --ext .js miniprogram/app.js miniprogram/apis/** miniprogram/components/** miniprogram/pages/** miniprogram/utils/**",
+    "lint:fix": "eslint --fix --ext .js miniprogram/app.js miniprogram/apis/** miniprogram/components/** miniprogram/pages/** miniprogram/utils/**"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Authing/authing-miniapp.git"
   },
-  "author": "",
+  "author": "https://github.com/Authing",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Authing/authing-miniapp/issues"
@@ -18,5 +19,11 @@
   "homepage": "https://github.com/Authing/authing-miniapp#readme",
   "dependencies": {
     "@authing/miniapp-wx": "^5.1.4"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "husky": "^8.0.1"
   }
 }

@@ -1,11 +1,13 @@
-export async function getPublicConfig () {
+export async function getPublicConfig() {
   const app = getApp()
 
   const { appId } = app.globalData.miniappConfig
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
-      url: app.globalData.miniappConfig.host + `/api/v2/applications/${appId}/public-config`,
+      url:
+        app.globalData.miniappConfig.host +
+        `/api/v2/applications/${appId}/public-config`,
       method: 'GET',
       success: res => {
         if (res.data.code === 200) {
@@ -14,7 +16,7 @@ export async function getPublicConfig () {
           resolve([res.data, undefined])
         }
       },
-      fail: (res) => {
+      fail: res => {
         resolve([res, undefined])
       }
     })

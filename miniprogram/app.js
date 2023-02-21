@@ -38,14 +38,14 @@ App({
 
   authing: null,
 
-  resetScanCodeLoginConfig (config) {
+  resetScanCodeLoginConfig(config) {
     this.globalData.scanCodeLoginConfig = {
       ...this.globalData.scanCodeLoginConfig,
       ...config
     }
   },
 
-  initAuthing (options = {}) {
+  initAuthing(options = {}) {
     const { userpool, app, extIdpConnIdentifier, showPointsFunc } = options
 
     this.globalData.miniappConfig = {
@@ -64,11 +64,11 @@ App({
     })
   },
 
-  resetAuthing () {
+  resetAuthing() {
     this.authing = null
   },
 
-  async getAuthing (options = {}) {
+  async getAuthing(options = {}) {
     if (this.authing) {
       return this.authing
     }
@@ -92,7 +92,7 @@ App({
     return this.authing
   },
 
-  async getAppConfig (options = {}) {
+  async getAppConfig(options = {}) {
     const { qrcodeId = '' } = options
 
     const data = {}
@@ -101,7 +101,7 @@ App({
       data.qrcodeId = qrcodeId
     }
 
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       wx.request({
         url: configAPIHost + '/api/v2/wechat-miniprogram-config/launch-params',
         method: 'GET',
@@ -120,14 +120,14 @@ App({
     })
   },
 
-  showLoginErrorToast (error) {
+  showLoginErrorToast(error) {
     wx.showToast({
       title: error.message || '请重新登录',
       icon: 'none'
     })
   },
 
-  async loginByCode () {
+  async loginByCode() {
     return await this.authing.loginByCode({
       extIdpConnidentifier: this.globalData.miniappConfig.extIdpConnIdentifier,
       wechatMiniProgramCodePayload: {
@@ -140,7 +140,7 @@ App({
     })
   },
 
-  async invokeRemainLoginCodeSteps () {
+  async invokeRemainLoginCodeSteps() {
     const [loginByCodeError] = await this.loginByCode()
 
     if (loginByCodeError) {
@@ -164,7 +164,7 @@ App({
     })
   },
 
-  async changeQrcodeStatusAndToLoginSuccessPage (options) {
+  async changeQrcodeStatusAndToLoginSuccessPage(options) {
     const { userInfo } = options
 
     wx.showLoading()
@@ -184,7 +184,7 @@ App({
     const [authWxappError] = await authWxapp({
       userInfo
     })
-    
+
     if (authWxappError) {
       return wx.showToast({
         title: authWxappError.message,
@@ -197,10 +197,10 @@ App({
     this.toLoginSuccessPage()
   },
 
-  toLoginSuccessPage () {
+  toLoginSuccessPage() {
     const pageStack = getCurrentPages()
     const url = '/pages/scan-qrcode-login-success/scan-qrcode-login-success'
-    
+
     if (pageStack.length > 1) {
       return wx.redirectTo({
         url

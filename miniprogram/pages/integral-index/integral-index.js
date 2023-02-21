@@ -24,7 +24,7 @@ Page({
     wx.hideHomeButton()
   },
 
-  async onShow () {
+  async onShow() {
     await app.getAuthing()
     this.getUserInfo()
     this.getIntegralList()
@@ -32,11 +32,11 @@ Page({
     this.getUserIntegrals()
   },
 
-  onUnload () {
+  onUnload() {
     timer && clearTimeout(timer)
   },
 
-  async onLogin (e) {
+  async onLogin(e) {
     this.setData({
       userInfo: e.detail
     })
@@ -44,7 +44,7 @@ Page({
     this.getUserIntegrals()
   },
 
-  async getUserInfo () {
+  async getUserInfo() {
     const [error, userInfo] = await app.authing.getUserInfo()
 
     if (error) {
@@ -56,7 +56,7 @@ Page({
     })
   },
 
-  async getIntegralList () {
+  async getIntegralList() {
     const [error, res] = await getIntegralList()
 
     if (error) {
@@ -68,7 +68,7 @@ Page({
     })
   },
 
-  async getUserIntegrals () {
+  async getUserIntegrals() {
     const [error, res] = await getUserIntegrals()
 
     if (error) {
@@ -80,7 +80,7 @@ Page({
     })
   },
 
-  async toExchange (e) {
+  async toExchange(e) {
     const { id } = e.detail
     const [error, result] = await exchangeIntegral({
       vouchersCode: id
@@ -104,10 +104,10 @@ Page({
         title: result.message,
         icon: 'none'
       })
-      
+
       timer = setTimeout(() => {
         wx.navigateTo({
-          url: '/pages/exchange-records/exchange-records',
+          url: '/pages/exchange-records/exchange-records'
         })
       }, 1000)
 
@@ -115,15 +115,17 @@ Page({
     }
 
     // 用户未绑定手机号
-    const currentExchangedIntegral = this.data.integralList.find(item => item.id === id)
-    
+    const currentExchangedIntegral = this.data.integralList.find(
+      item => item.id === id
+    )
+
     this.setData({
       isShowExchangeModal: true,
       currentExchangedIntegral
     })
   },
 
-  async onAuthenticatePhone (e) {
+  async onAuthenticatePhone(e) {
     this.setData({
       isShowExchangeModal: false
     })
@@ -133,7 +135,7 @@ Page({
     // 用户拒绝授权或获取手机授权失败，直接跳转到兑换记录页面
     if (!code) {
       return wx.navigateTo({
-        url: '/pages/exchange-records/exchange-records',
+        url: '/pages/exchange-records/exchange-records'
       })
     }
 
@@ -151,7 +153,7 @@ Page({
         phone: phoneInfo.phone_info.purePhoneNumber,
         codeForUpdatePhone: phoneInfo.codeForUpdatePhone
       })
-  
+
       // 无论是否更新成功，都跳转到到兑换记录页面
       wx.navigateTo({
         url: '/pages/exchange-records/exchange-records'

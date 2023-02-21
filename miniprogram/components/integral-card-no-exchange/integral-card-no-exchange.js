@@ -15,7 +15,7 @@ Component({
   },
 
   methods: {
-    toExchange () {
+    toExchange() {
       if (!this.data.userInfo) {
         return wx.showToast({
           title: '请先登录',
@@ -34,7 +34,10 @@ Component({
       }
 
       // 积分不足
-      if (userIntegrals && userIntegrals.checkinPointsBalance < integralData.points) {
+      if (
+        userIntegrals &&
+        userIntegrals.checkinPointsBalance < integralData.points
+      ) {
         return wx.showToast({
           title: '积分不足',
           icon: 'none'

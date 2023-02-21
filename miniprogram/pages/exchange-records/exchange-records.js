@@ -10,7 +10,8 @@ Page({
     exchangedRecordList: [],
     page: 1,
     totalCount: 0,
-    enterpriseWechatQrcode: 'https://files.authing.co/authing-website/wechat-enterprice-code.png'
+    enterpriseWechatQrcode:
+      'https://files.authing.co/authing-website/wechat-enterprice-code.png'
   },
 
   async onLoad() {
@@ -19,20 +20,23 @@ Page({
     this.getExchangedRecordList()
   },
 
-  onClickQrcode () {
+  onClickQrcode() {
     wx.previewImage({
       urls: [this.data.enterpriseWechatQrcode]
     })
   },
 
-  onReachBottom () {
-    if (this.data.totalCount && this.data.exchangedRecordList.length >= this.data.totalCount) {
+  onReachBottom() {
+    if (
+      this.data.totalCount &&
+      this.data.exchangedRecordList.length >= this.data.totalCount
+    ) {
       return
     }
     this.getExchangedRecordList()
   },
 
-  async getUserIntegrals () {
+  async getUserIntegrals() {
     const [error, res] = await getUserIntegrals()
 
     if (error) {
@@ -44,7 +48,7 @@ Page({
     })
   },
 
-  async getExchangedRecordList () {
+  async getExchangedRecordList() {
     const [error, res] = await getExchangedRecordList({
       pageNo: this.data.page
     })
@@ -56,12 +60,13 @@ Page({
       })
     }
 
-    const list = res.data.list.map(item => {
-      return {
-        ...item,
-        createdAt: formatDate(item.createdAt)
-      }
-    }) || []
+    const list =
+      res.data.list.map(item => {
+        return {
+          ...item,
+          createdAt: formatDate(item.createdAt)
+        }
+      }) || []
 
     const exchangedRecordList = this.data.exchangedRecordList.concat(list)
 

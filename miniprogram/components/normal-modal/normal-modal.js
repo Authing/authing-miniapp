@@ -19,7 +19,7 @@ Component({
   },
 
   methods: {
-    onClose () {
+    onClose() {
       this.triggerEvent('onClose')
     }
   }

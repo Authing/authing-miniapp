@@ -1,4 +1,4 @@
-export async function updatePhone (options) {
+export async function updatePhone(options) {
   const app = getApp()
   const { phoneCountryCode, phone, codeForUpdatePhone } = options
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
@@ -7,9 +7,11 @@ export async function updatePhone (options) {
     return Promise.resolve([loginStateError, undefined])
   }
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v3/wechat-miniprogram/updatePhone',
+      url:
+        app.globalData.miniappConfig.host +
+        '/api/v3/wechat-miniprogram/updatePhone',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -27,20 +29,22 @@ export async function updatePhone (options) {
           resolve([res.data, undefined])
         }
       },
-      fail: (res) => {
+      fail: res => {
         resolve([res, undefined])
       }
     })
   })
 }
 
-export async function getCryptedPhone (options = {}) {
+export async function getCryptedPhone(options = {}) {
   const app = getApp()
   const { extIdpConnIdentifier, code } = options
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v3/get-wechat-miniprogram-phone-data',
+      url:
+        app.globalData.miniappConfig.host +
+        '/api/v3/get-wechat-miniprogram-phone-data',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId
@@ -63,7 +67,7 @@ export async function getCryptedPhone (options = {}) {
   })
 }
 
-export async function logout () {
+export async function logout() {
   const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
@@ -86,9 +90,10 @@ export async function logout () {
     }
   })
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v3/wechat-miniprogram/logout',
+      url:
+        app.globalData.miniappConfig.host + '/api/v3/wechat-miniprogram/logout',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -112,13 +117,15 @@ export async function logout () {
   })
 }
 
-export async function checkExistsUser () {
+export async function checkExistsUser() {
   const app = getApp()
   const loginCode = await app.authing.getLoginCode()
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v3/wechat-miniprogram/checkExistsUser',
+      url:
+        app.globalData.miniappConfig.host +
+        '/api/v3/wechat-miniprogram/checkExistsUser',
       method: 'POST',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId
