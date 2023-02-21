@@ -4,17 +4,10 @@
  * Install the Eslint extension before using this feature.
  */
 module.exports = {
-  env: {
-    es6: true,
-    browser: true,
-    node: true,
-  },
-  ecmaFeatures: {
-    modules: true,
-  },
+  root: true,
   parserOptions: {
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: 'module'
   },
   globals: {
     wx: true,
@@ -24,8 +17,27 @@ module.exports = {
     getApp: true,
     Component: true,
     requirePlugin: true,
-    requireMiniProgram: true,
+    requireMiniProgram: true
   },
-  // extends: 'eslint:recommended',
-  rules: {},
+  extends: [
+    'plugin:prettier/recommended'
+  ],
+  rules: {
+    indent: [
+      'error',
+      2
+    ],
+    'linebreak-style': [
+      'error',
+      'unix'
+    ],
+    quotes: [
+      'error',
+      'single'
+    ],
+    semi: [
+      'error',
+      'never'
+    ]
+  }
 }

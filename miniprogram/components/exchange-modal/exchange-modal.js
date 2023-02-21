@@ -11,7 +11,7 @@ Component({
   },
 
   methods: {
-    authenticatePhone (e) {
+    authenticatePhone(e) {
       this.triggerEvent('close', e.detail)
     }
   }

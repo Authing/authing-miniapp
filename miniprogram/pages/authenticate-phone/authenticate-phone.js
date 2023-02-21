@@ -25,7 +25,7 @@ Page({
     this.getAgreements()
   },
 
-  onUnload () {
+  onUnload() {
     this.clearScanCodeLoginConfig()
   },
 
@@ -33,15 +33,19 @@ Page({
    * 为避免影响个人中心 onLoad 中对 scene 的判断逻辑
    * 授权登录成功后清除掉已过期/无效的 scene
    */
-  clearScanCodeLoginConfig () {
+  clearScanCodeLoginConfig() {
     app.resetScanCodeLoginConfig({
       scene: ''
     })
   },
 
-  async getAgreements () {
+  async getAgreements() {
     const [publicConfigError, publicConfig] = await getPublicConfig()
-    if (publicConfigError || !publicConfig.agreements || !publicConfig.agreements.length) {
+    if (
+      publicConfigError ||
+      !publicConfig.agreements ||
+      !publicConfig.agreements.length
+    ) {
       this.setData({
         acceptedAgreements: true
       })
@@ -69,17 +73,19 @@ Page({
     })
   },
 
-  openAgreement (e) {
+  openAgreement(e) {
     const { link } = e.currentTarget.dataset
     wx.navigateTo({
-      url: `/pages/webview/webview?url=${encodeURIComponent(link)}`,
+      url: `/pages/webview/webview?url=${encodeURIComponent(link)}`
     })
   },
 
-  onChangeAgreements (e) {
+  onChangeAgreements(e) {
     const value = e.detail.value.map(item => +item)
 
-    const requiredAgreements = this.data.agreements.filter(item => item.required)
+    const requiredAgreements = this.data.agreements.filter(
+      item => item.required
+    )
 
     const notAcceptRequiredAgreements = requiredAgreements.find(item => {
       return value.indexOf(+item.id) === -1
@@ -90,7 +96,7 @@ Page({
     })
   },
 
-  async authenticatePhoneAndInvokeLogin (e) {
+  async authenticatePhoneAndInvokeLogin(e) {
     if (!this.data.acceptedAgreements) {
       return wx.showToast({
         title: '请先阅读并同意协议',
@@ -113,11 +119,11 @@ Page({
     })
   },
 
-  async cancelLogin () {
+  async cancelLogin() {
     wx.navigateBack()
   },
 
-  async loginByPhone (options = {}) {
+  async loginByPhone(options = {}) {
     const { phoneCode } = options
 
     this.invokeRemainLoginByPhoneSteps({
@@ -127,11 +133,11 @@ Page({
 
   /**
    * 新用户
-   * @param { phoneCode } options 
+   * @param { phoneCode } options
    */
-  async invokeHasNotBindUserLogic (options = {}) {
+  async invokeHasNotBindUserLogic(options = {}) {
     const { phoneCode } = options
-  
+
     if (phoneCode) {
       return this.loginByPhone({
         phoneCode
@@ -143,20 +149,20 @@ Page({
 
   /**
    * 老用户
-   * @param { phoneCode } options 
+   * @param { phoneCode } options
    */
-  async invokeHasBindUserLogic (options = {}) {
+  async invokeHasBindUserLogic(options = {}) {
     const { phoneCode } = options
 
     // 老用户未绑定手机号
     // 即使用户拒绝授权手机号，也不能阻断登录
-    if (!phoneCode) {  
+    if (!phoneCode) {
       return app.invokeRemainLoginCodeSteps()
     }
 
     // 老用户已绑定手机号
     // 这里只是兜底，在 mine 页面已执行『老用户已绑定手机号』的逻辑
-    if (this.data.pageOptions.hasBindPhone) {  
+    if (this.data.pageOptions.hasBindPhone) {
       return app.invokeRemainLoginCodeSteps()
     }
 
@@ -199,9 +205,9 @@ Page({
    * 绑定手机号
    * 1. 获取解密后的手机号
    * 2. 更新用户手机号
-   * @param { phoneCode } options 
+   * @param { phoneCode } options
    */
-  async bindPhone (options = {}) {
+  async bindPhone(options = {}) {
     const { phoneCode } = options
 
     const [phoneInfoError, phoneInfo] = await getCryptedPhone({
@@ -228,7 +234,7 @@ Page({
     return [undefined, true]
   },
 
-  async invokeRemainLoginByPhoneSteps (options) {
+  async invokeRemainLoginByPhoneSteps(options) {
     const { phoneCode } = options
 
     wx.showLoading({

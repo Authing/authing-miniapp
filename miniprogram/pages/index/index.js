@@ -26,14 +26,14 @@ Page({
     }, 1000)
   },
 
-  clearTimer () {
+  clearTimer() {
     if (timer) {
       clearTimeout(timer)
       timer = null
     }
   },
 
-  onUnload () {
+  onUnload() {
     this.clearTimer()
   }
 })

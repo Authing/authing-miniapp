@@ -5,7 +5,7 @@ Page({
     appName: ''
   },
 
-  onLoad () {
+  onLoad() {
     this.setData({
       appName: app.globalData.miniappConfig.appName
     })
@@ -16,8 +16,8 @@ Page({
       scene: ''
     })
   },
-  
-  confirm () {
+
+  confirm() {
     wx.navigateBack()
   }
 })

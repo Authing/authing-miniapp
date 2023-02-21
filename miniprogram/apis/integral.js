@@ -1,10 +1,10 @@
 /**
  * 积分列表
  */
-export async function getIntegralList () {
+export async function getIntegralList() {
   const app = getApp()
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v2/points-vouchers/list',
       method: 'GET',
@@ -18,7 +18,7 @@ export async function getIntegralList () {
           resolve([res.data, undefined])
         }
       },
-      fail: (res) => {
+      fail: res => {
         resolve([res, undefined])
       }
     })
@@ -28,7 +28,7 @@ export async function getIntegralList () {
 /**
  * 获取用户积分
  */
-export async function getUserIntegrals () {
+export async function getUserIntegrals() {
   const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
@@ -36,7 +36,7 @@ export async function getUserIntegrals () {
     return Promise.resolve([loginStateError, undefined])
   }
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v2/user-points/mypoints',
       method: 'GET',
@@ -51,7 +51,7 @@ export async function getUserIntegrals () {
           resolve([res.data, undefined])
         }
       },
-      fail: (res) => {
+      fail: res => {
         resolve([res, undefined])
       }
     })
@@ -61,7 +61,7 @@ export async function getUserIntegrals () {
 /**
  * 签到
  */
-export async function checkin () {
+export async function checkin() {
   const app = getApp()
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
 
@@ -69,7 +69,7 @@ export async function checkin () {
     return Promise.resolve([loginStateError, undefined])
   }
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v2/user-points/checkin',
       method: 'POST',
@@ -84,7 +84,7 @@ export async function checkin () {
           resolve([res.data, undefined])
         }
       },
-      fail: (res) => {
+      fail: res => {
         resolve([res, undefined])
       }
     })
@@ -94,14 +94,17 @@ export async function checkin () {
 /**
  * 兑换积分
  */
-export async function exchangeIntegral (options) {
+export async function exchangeIntegral(options) {
   const app = getApp()
   const { vouchersCode } = options
 
   if (!vouchersCode) {
-    return Promise.resolve([{
-      message: 'vouchersCode is not defined'
-    }, undefined])
+    return Promise.resolve([
+      {
+        message: 'vouchersCode is not defined'
+      },
+      undefined
+    ])
   }
 
   const [loginStateError, loginStateInfo] = await app.authing.getLoginState()
@@ -110,7 +113,7 @@ export async function exchangeIntegral (options) {
     return Promise.resolve([loginStateError, undefined])
   }
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
       url: app.globalData.miniappConfig.host + '/api/v2/user-points/redeem',
       method: 'POST',
@@ -128,7 +131,7 @@ export async function exchangeIntegral (options) {
           resolve([res.data, undefined])
         }
       },
-      fail: (res) => {
+      fail: res => {
         resolve([res, undefined])
       }
     })
@@ -138,7 +141,7 @@ export async function exchangeIntegral (options) {
 /**
  * 用户积分兑换记录
  */
-export async function getExchangedRecordList (options) {
+export async function getExchangedRecordList(options) {
   const app = getApp()
   const { pageNo = 1, pageSize = 10 } = options
 
@@ -148,9 +151,11 @@ export async function getExchangedRecordList (options) {
     return Promise.resolve([loginStateError, undefined])
   }
 
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     wx.request({
-      url: app.globalData.miniappConfig.host + '/api/v2/user-points/pageRedeemHist',
+      url:
+        app.globalData.miniappConfig.host +
+        '/api/v2/user-points/pageRedeemHist',
       method: 'GET',
       header: {
         'x-authing-app-id': app.globalData.miniappConfig.appId,
@@ -167,7 +172,7 @@ export async function getExchangedRecordList (options) {
           resolve([res.data, undefined])
         }
       },
-      fail: (res) => {
+      fail: res => {
         resolve([res, undefined])
       }
     })

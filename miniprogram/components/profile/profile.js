@@ -17,7 +17,7 @@ Component({
   },
 
   lifetimes: {
-    attached () {
+    attached() {
       this.setData({
         _userInfo: this.data.userInfo
       })
@@ -25,7 +25,7 @@ Component({
   },
 
   observers: {
-    userInfo (userInfo) {
+    userInfo(userInfo) {
       this.setData({
         _userInfo: userInfo
       })
@@ -33,7 +33,7 @@ Component({
   },
 
   methods: {
-    async toLogin () {
+    async toLogin() {
       if (!app.authing) {
         return wx.showToast({
           title: 'SDK 初始化失败，请检查应用配置',
@@ -77,7 +77,7 @@ Component({
       wx.hideLoading()
     },
 
-    async getUserInfo () {
+    async getUserInfo() {
       const [error, userInfo] = await app.authing.getUserInfo()
 
       if (error) {
@@ -96,11 +96,11 @@ Component({
       this.triggerEvent('onLogin', _userInfo)
     },
 
-    checkin () {
+    checkin() {
       checkin()
     },
 
-    copyUserId () {
+    copyUserId() {
       wx.setClipboardData({
         data: this.data._userInfo.userId
       })

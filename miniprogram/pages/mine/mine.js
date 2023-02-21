@@ -40,7 +40,7 @@ Page({
     if (userInfoError) {
       return wx.hideLoading()
     }
-    
+
     this.setData({
       userInfo: formatUserInfo(userInfo)
     })
@@ -48,22 +48,22 @@ Page({
     wx.hideLoading()
   },
 
-  onHide () {
+  onHide() {
     wx.hideLoading()
   },
 
-  onShow () {
+  onShow() {
     this.getUserInfo()
   },
 
-  async onLogin (e) {
+  async onLogin(e) {
     this.setData({
-      userInfo: e.detail,
+      userInfo: e.detail
     })
     checkin()
   },
 
-  async authenticatePhoneAndChangeQrcodeStatus () {
+  async authenticatePhoneAndChangeQrcodeStatus() {
     // 只有从扫码登录进入，才引导用户绑定手机号
     if (!app.globalData.scanCodeLoginConfig.scene) {
       return
@@ -86,11 +86,11 @@ Page({
 
     // 其他场景跳转到授权页
     wx.navigateTo({
-      url: `/pages/authenticate-phone/authenticate-phone?hasBindUser=${+hasBindUser}&hasBindPhone=${+hasBindPhone}`,
+      url: `/pages/authenticate-phone/authenticate-phone?hasBindUser=${+hasBindUser}&hasBindPhone=${+hasBindPhone}`
     })
   },
 
-  async getUserInfo () {
+  async getUserInfo() {
     if (!app.authing) {
       return
     }
@@ -115,14 +115,14 @@ Page({
     })
   },
 
-  logout () {
+  logout() {
     wx.showModal({
       title: '退出登录',
       content: '确定要退出登录吗？',
       showCancel: true,
       cancelText: '取消',
       confirmText: '退出',
-      success: async (res) => {
+      success: async res => {
         if (!res.confirm) {
           return
         }
