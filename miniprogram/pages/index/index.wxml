@@ -1,1 +1,1 @@
-<image src="https://files.authing.co/authing-miniapp/cover-image.png" class="cover-image" bindtap="scanCode"></image>
+<image src="https://files.authing.co/authing-miniapp/wanke/cover-image.png" class="cover-image" bindtap="scanCode"></image>
