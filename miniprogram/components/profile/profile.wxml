@@ -3,7 +3,7 @@
     <image src="https://files.authing.co/authing-miniapp/user-profile-nologin.svg" class="image"></image>
     <view class="overview no-login">
       <view class="username">登录/注册</view>
-      <view class="tips">体验 Authing 身份云</view>
+      <view class="tips">统一身份认证平台</view>
     </view>
   </view>
 
