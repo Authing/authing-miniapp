@@ -13,16 +13,8 @@
   <block wx:else>
     <view class="user-info-block">
       <view class="user-info-item">
-        <view class="left">注册日期</view>
-        <view class="right">{{ userInfo.createdAt || '-' }}</view>
-      </view>
-      <view class="user-info-item">
         <view class="left">手机号</view>
         <view class="right">{{ userInfo.phone || '-' }}</view>
-      </view>
-      <view class="user-info-item">
-        <view class="left">邮箱</view>
-        <view class="right">{{ userInfo.email || '-' }}</view>
       </view>
     </view>
     
@@ -34,26 +26,6 @@
       <view class="user-info-item">
         <view class="left">姓名</view>
         <view class="right">{{ userInfo.name || '-' }}</view>
-      </view>
-      <view class="user-info-item">
-        <view class="left">昵称</view>
-        <view class="right">{{ userInfo.nickname || '-' }}</view>
-      </view>
-      <view class="user-info-item">
-        <view class="left">地址</view>
-        <view class="right">{{ userInfo.address || '-' }}</view>
-      </view>
-      <view class="user-info-item">
-        <view class="left">性别</view>
-        <view class="right">{{ userInfo.gender || '-' }}</view>
-      </view>
-      <view class="user-info-item">
-        <view class="left">生日</view>
-        <view class="right">{{ userInfo.birthdate || '-' }}</view>
-      </view>
-      <view class="user-info-item">
-        <view class="left">公司</view>
-        <view class="right">{{ userInfo.company || '-' }}</view>
       </view>
     </view>
 
