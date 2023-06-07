@@ -1,4 +1,4 @@
-import { updatePhone, getCryptedPhone, getPublicConfig } from '../../apis/index'
+import { getPublicConfig } from '../../apis/index'
 
 import { extractAgreements } from '../../utils/utils'
 
@@ -167,71 +167,9 @@ Page({
     }
 
     // 老用户未绑定手机号且未拒绝授权
-    // 先登录
-    const [loginByCodeError] = await app.loginByCode()
-
-    if (loginByCodeError) {
-      return wx.showToast({
-        title: loginByCodeError.message,
-        icon: 'none'
-      })
-    }
-
-    // 登录成功后绑定手机号
-    // 1. 即使手机号已被另一个账号绑定
-    // 2. 或因其他原因导致手机号解密失败
-    // 3. 等等......
-    // ***** 无论是否绑定成功，都不能阻断登录流程 *****
-    await this.bindPhone({
+    this.invokeRemainLoginByPhoneSteps({
       phoneCode
     })
-
-    const [userInfoError, userInfo] = await app.authing.getUserInfo()
-
-    if (userInfoError) {
-      return wx.showToast({
-        title: userInfoError.message || '用户信息获取失败，请重新扫码',
-        icon: 'none'
-      })
-    }
-
-    // 修改二维码状态且跳转到授权成功页，扫码登录成功
-    app.changeQrcodeStatusAndToLoginSuccessPage({
-      userInfo
-    })
-  },
-
-  /**
-   * 绑定手机号
-   * 1. 获取解密后的手机号
-   * 2. 更新用户手机号
-   * @param { phoneCode } options
-   */
-  async bindPhone(options = {}) {
-    const { phoneCode } = options
-
-    const [phoneInfoError, phoneInfo] = await getCryptedPhone({
-      extIdpConnIdentifier: app.globalData.miniappConfig.extIdpConnIdentifier,
-      code: phoneCode
-    })
-
-    if (phoneInfoError) {
-      return [phoneInfoError, undefined]
-    }
-
-    // 走接口绑定手机号
-    const [updatePhoneError] = await updatePhone({
-      phoneCountryCode: phoneInfo.phone_info.countryCode,
-      phone: phoneInfo.phone_info.purePhoneNumber,
-      codeForUpdatePhone: phoneInfo.codeForUpdatePhone
-    })
-
-    // 即使手机号更新失败，也不能阻断用户登录流程
-    if (updatePhoneError) {
-      return [updatePhoneError, undefined]
-    }
-
-    return [undefined, true]
   },
 
   async invokeRemainLoginByPhoneSteps(options) {

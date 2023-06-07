@@ -12,7 +12,6 @@ Page({
 
   async onLoad() {
     wx.hideHomeButton()
-
     wx.showLoading()
 
     const { scene } = app.globalData.scanCodeLoginConfig
