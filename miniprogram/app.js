@@ -6,7 +6,7 @@ import { grantWxapp, authWxapp } from './apis/index'
 const environment = 'prod'
 
 const apiHostMap = {
-  why: 'https://core.authing.me',
+  why: 'https://68490cce.r7.cpolar.top',
   test: 'https://core.mysql.authing-inc.co',
   pre: 'https://core.pre.authing.cn',
   prod: 'https://core.authing.cn'
