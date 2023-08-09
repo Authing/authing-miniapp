@@ -6,7 +6,8 @@
     "pages/mine/mine",
     "pages/authenticate-phone/authenticate-phone",
     "pages/scan-qrcode-login-success/scan-qrcode-login-success",
-    "pages/webview/webview"
+    "pages/webview/webview",
+    "pages/bind/bind"
   ],
   "window": {
     "backgroundTextStyle": "light",

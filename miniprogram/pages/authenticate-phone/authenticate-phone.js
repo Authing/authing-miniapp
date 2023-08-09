@@ -35,7 +35,8 @@ Page({
    */
   clearScanCodeLoginConfig() {
     app.resetScanCodeLoginConfig({
-      scene: ''
+      scene: '',
+      bind: 0
     })
   },
 

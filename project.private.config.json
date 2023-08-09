@@ -35,8 +35,16 @@
           "query": "",
           "launchMode": "default",
           "scene": null
+        },
+        {
+          "name": "账号绑定",
+          "pathName": "pages/bind/bind",
+          "query": "",
+          "launchMode": "default",
+          "scene": null
         }
       ]
     }
-  }
+  },
+  "libVersion": "3.0.0"
 }
