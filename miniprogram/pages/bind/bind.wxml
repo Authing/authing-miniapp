@@ -1,0 +1,30 @@
+<view class="authenticate-phone-container">
+  <image 
+    src="https://files.authing.co/authing-miniapp/authentication-icon.svg" 
+    class="authentication-icon">
+  </image>
+  
+  <view class="title">{{ appName }}</view>
+  
+  <view class="tips">
+    <view class="title">请确认是本人操作</view>
+    <view class="item">
+      <view class="icon">.</view>
+      <view>使用账号绑定身份源</view>
+    </view>
+    <view class="item">
+      <view class="icon">.</view>
+      <view>使用你的微信基本信息</view>
+    </view>
+    <view class="item">
+      <view class="icon">.</view>
+      <view>使用你的手机账号</view>
+    </view>
+  </view>
+
+  <button
+    class="button login-button" 
+    open-type="getPhoneNumber" 
+    bindgetphonenumber="authenticatePhoneAndInvokeBind">授权
+  </button>
+</view>

@@ -61,3 +61,41 @@ export async function authWxapp(options) {
     })
   })
 }
+
+/**
+ * 扫描控制台个人中心页面身份源二维码，绑定身份源
+ * @param {phoneCode} options 微信手机号 code
+ */
+export async function bindIndentity(options = {}) {
+  const { phoneCode } = options
+  const app = getApp()
+  const { scene } = app.globalData.scanCodeLoginConfig
+  const loginCode = await app.authing.getLoginCode()
+
+  return new Promise(resolve => {
+    wx.request({
+      url:
+        app.globalData.miniappConfig.host + `/oauth/wxapp/bind?random=${scene}`,
+      method: 'POST',
+      data: {
+        wxLoginInfo: {
+          code: loginCode
+        },
+        wxPhoneInfo: {
+          code: phoneCode
+        }
+      },
+      success: res => {
+        if (res.data.code === 200) {
+          // 接口 response 中的 res.data.data 为 undefined
+          resolve([undefined, res.data])
+        } else {
+          resolve([res.data || res, undefined])
+        }
+      },
+      fail: res => {
+        resolve([res.data || res, undefined])
+      }
+    })
+  })
+}

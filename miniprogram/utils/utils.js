@@ -44,3 +44,14 @@ export function extractAgreements(str) {
   }
   return res
 }
+
+export function parseSearch(str = '') {
+  if (!str) {
+    return {}
+  }
+  return str.split('&').reduce((map, item) => {
+    const [key, value] = item.split('=')
+    map[key] = value
+    return map
+  }, {})
+}

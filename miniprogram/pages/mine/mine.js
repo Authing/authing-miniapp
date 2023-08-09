@@ -133,7 +133,8 @@ Page({
         })
 
         app.resetScanCodeLoginConfig({
-          scene: ''
+          scene: '',
+          bind: 0
         })
       }
     })

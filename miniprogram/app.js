@@ -31,7 +31,9 @@ App({
     },
     scanCodeLoginConfig: {
       // 小程序扫码登录的 scene
-      scene: ''
+      scene: '',
+      // 当前二维码是否用于在控制台个人中心绑定个人信息 1: 是 0：否
+      bind: 0
     },
     userInfo: null
   },

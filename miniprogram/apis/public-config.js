@@ -1,6 +1,5 @@
 export async function getPublicConfig() {
   const app = getApp()
-
   const { appId } = app.globalData.miniappConfig
 
   return new Promise(resolve => {
